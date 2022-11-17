@@ -1,0 +1,30 @@
+﻿<Page x:Class="School.AdminPage.AdminPageLesson"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:School.AdminPage"
+      mc:Ignorable="d" 
+      DataContext="{Binding RelativeSource={RelativeSource Self}}"
+      Title="AdminPageLesson">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <DataGrid CanUserAddRows="False" AutoGenerateColumns="False" ItemsSource="{Binding Lessons}" x:Name="DataGridLessons">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="2*" Header="Название предмета" Binding="{Binding Path=Name}"/>
+                <DataGridCheckBoxColumn Width="2*" Header="Удален/Активен" Binding="{Binding Path=Active}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 10 20 10">
+            <Button Content="Удалить" Margin="0 0 20 0" Padding="12 5" Click="ButtonDeleteClick"/>
+            <Button Content="Добавить" Margin="0 0 20 0" Padding="12 5" Click="ButtomAddClick"/>
+            <Button Content="Сохранить" Padding="12 0 12 0" Click="ButtonSaveClick"/>
+        </StackPanel>
+    </Grid>
+</Page>
