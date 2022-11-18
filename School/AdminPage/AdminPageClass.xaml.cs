@@ -67,15 +67,7 @@ namespace School.AdminPage
             if (validationResult == false)
                 return;
 
-            try
-            {
-                DBConnect.db.SaveChanges();
-            }
-            catch (DbEntityValidationException)
-            {
-                Administrator.MessageInfoStart(false);
-                Administrator.TimerMessageInfo();
-            }
+            Administrator.SaveChangeDB();
 
             Administrator.MessageInfoStart(true);
             Administrator.TimerMessageInfo();
@@ -119,15 +111,7 @@ namespace School.AdminPage
             }
             DataGridClasses.Items.Refresh();
 
-            try
-            {
-                DBConnect.db.SaveChanges();
-            }
-            catch (DbEntityValidationException)
-            {
-                Administrator.MessageInfoStart(false);
-                Administrator.TimerMessageInfo();
-            }
+            Administrator.SaveChangeDB();
 
             Administrator.MessageInfoStart(true);
             Administrator.TimerMessageInfo();

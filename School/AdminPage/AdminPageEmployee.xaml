@@ -10,10 +10,12 @@
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <DataGrid Grid.Row="0" ItemsSource="{Binding Employees}" CanUserAddRows="False" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto" x:Name="DataGridEmployee">
+        <TextBlock Text="Учителя"/>
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Employees}" CanUserAddRows="False" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto" x:Name="DataGridEmployee">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="2*" Header="Фамилия" Binding="{Binding Path=Surname}"/>
                 <DataGridTextColumn Width="2*" Header="Имя" Binding="{Binding StringFormat='{}{0}', Path=Name}"/>
@@ -31,7 +33,7 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 10 20 10">
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 10 20 10">
             <Button Content="Удалить" Margin="0 0 20 0" Padding="12 5" Click="ButtonDeleteClick"/>
             <Button Content="Добавить" Margin="0 0 20 0" Padding="12 5" Click="ButtomAddClick"/>
             <Button Content="Сохранить" Padding="12 0 12 0" Click="ButtonSaveClick"/>

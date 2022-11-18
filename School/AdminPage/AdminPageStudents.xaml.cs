@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
 
 namespace School.AdminPage
 {
@@ -76,7 +77,7 @@ namespace School.AdminPage
             if (validationResult == false)
                 return;
 
-            DBConnect.db.SaveChanges();
+            Administrator.SaveChangeDB();
 
             Administrator.MessageInfoStart(true);
             Administrator.TimerMessageInfo();
@@ -84,6 +85,8 @@ namespace School.AdminPage
         }
         private bool EntityValidator(Student student) =>
             Students.Count(x => x.Login == student.Login) == 1 &&
+            student.Password != null &&
+            Regex.IsMatch(student.Password.ToString().Trim(), @"\D") == false &&
             student.Lastname != null &&
             student.Name != null &&
             student.Surname != null;
@@ -127,15 +130,7 @@ namespace School.AdminPage
             }
             DataGridStudents.Items.Refresh();
 
-            try
-            {
-                DBConnect.db.SaveChanges();
-            }
-            catch (DbEntityValidationException)
-            {
-                Administrator.MessageInfoStart(false);
-                Administrator.TimerMessageInfo();
-            }
+            Administrator.SaveChangeDB();
 
             Administrator.MessageInfoStart(true);
             Administrator.TimerMessageInfo();

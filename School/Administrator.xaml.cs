@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,6 +42,19 @@ namespace School
                 return MessageBox.Show("Сохранить изменения", "Уведомление", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
             else
                 return MessageBox.Show("Удалить выделенную(ые) записи", "Уведомление", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
+        }
+
+        public static void SaveChangeDB()
+        {
+            try
+            {
+                DBConnect.db.SaveChanges();
+            }
+            catch (DbEntityValidationException)
+            {
+                MessageInfoStart(false);
+                TimerMessageInfo();
+            }
         }
 
         #region Штука для вывода инфы

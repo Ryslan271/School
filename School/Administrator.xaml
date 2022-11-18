@@ -17,20 +17,25 @@
             <ColumnDefinition Width="100"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-
+        <Border Grid.ColumnSpan="2" BorderBrush="#000" BorderThickness="0.5"> 
+            <StackPanel Background="#FF8EA9FF">
+                <TextBlock FontSize="34" HorizontalAlignment="Center" Text="Панель администратора"/>
+            </StackPanel>
+        </Border>
+        
         <TextBlock Grid.Column="1" Margin="10 0 0 0" Grid.Row="1" x:Name="MessageInfo"/>
 
-        <TextBlock Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" Text="Панель администратора"/>
 
         <StackPanel Grid.Row="2" Orientation="Vertical">
-            <Button Content="Учителя" Margin="10 0 0 0" Grid.Column="0" Click="ButtonClickEmployee"/>
-            <Button Margin="10 5 0 0" Grid.Column="1" Content="Ученики" Click="ButtonClickStudent"/>
-            <Button Margin="10 5 0 0" Grid.Column="3" Content="Расписание" Click="ButtonClickSchedules"/>
-            <Button Margin="10 5 0 0" Grid.Column="3" Content="Уроки" Click="ButtonClickLesson"/>
-            <Button Margin="10 5 0 0" Grid.Column="3" Content="Классы" Click="ButtonClickClass"/>
-            <Button Margin="10 5 0 0" Grid.Column="3" Content="***********" />
+            <Button Content="Учителя" Margin="10 0 0 0" Grid.Column="0" Click="ButtonClickEmployee" Style="{StaticResource ButtomInAdmin}"/>
+            <Button Margin="10 5 0 0" Grid.Column="1" Content="Ученики" Click="ButtonClickStudent" Style="{StaticResource ButtomInAdmin}"/>
+            <Button Margin="10 5 0 0" Grid.Column="3" Content="Расписание" Click="ButtonClickSchedules" Style="{StaticResource ButtomInAdmin}"/>
+            <Button Margin="10 5 0 0" Grid.Column="3" Content="Уроки" Click="ButtonClickLesson" Style="{StaticResource ButtomInAdmin}"/>
+            <Button Margin="10 5 0 0" Grid.Column="3" Content="Классы" Click="ButtonClickClass" Style="{StaticResource ButtomInAdmin}"/>
+            <Button Margin="10 5 0 0" Grid.Column="3" Content="***********" Style="{StaticResource ButtomInAdmin}"/>
         </StackPanel>
 
+        
         <Frame Grid.Row="2" Grid.Column="1" Margin="10 0 10 10" NavigationUIVisibility="Hidden" x:Name="PageAdmin"/>
     </Grid>
 </Window>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -54,59 +55,56 @@ namespace School.AdminPage
             DBConnect.db.Employee.Load();
             _employees = DBConnect.db.Employee.Local;
 
-            DBConnect.db.Lesson.Load();
-            _lesson = DBConnect.db.Lesson.Local;
-
             InitializeComponent();
+
+            DBConnect.db.Configuration.AutoDetectChangesEnabled = true;
         }
 
         #region Сохранение 
         private void ButtonSaveClick(object sender, RoutedEventArgs e)
         {
-            try
+            if (DBConnect.db.ChangeTracker.HasChanges() == false)
+                return;
+
+            var validationResult = DBConnect.db.ChangeTracker.Entries().ToList().All(entry =>
             {
-                if (DBConnect.db.ChangeTracker.HasChanges() == false)
-                    return;
-
-                var validationResult = DBConnect.db.ChangeTracker.Entries().ToList().All(entry =>
-                {
-                    if (entry.Entity is Schedule schedule == false)
-                        return true;
-
-                    if (EntityValidator(schedule) == false)
-                    {
-                        Administrator.MessageInfoStart(false);
-                        Administrator.TimerMessageInfo();
-                        return false;
-                    }
+                if (entry.Entity is Schedule schedule == false)
                     return true;
-                });
 
-                if (validationResult == false)
-                    return;
+                if (EntityValidator(schedule) == false)
+                {
+                    Administrator.MessageInfoStart(false);
+                    Administrator.TimerMessageInfo();
+                    return false;
+                }
 
-                DBConnect.db.SaveChanges();
+                schedule.DataTimeFinich = schedule.DataTimeStart + new TimeSpan(0, 40 , 0);
 
-                Administrator.MessageInfoStart(true);
-                Administrator.TimerMessageInfo();
-            }
-            catch (Exception)
-            {
-                Administrator.MessageInfoStart(false);
-                Administrator.TimerMessageInfo();
-            }
+                return true;
+            });
+
+            if (validationResult == false)
+                return;
+
+            Administrator.SaveChangeDB();
+
+            Administrator.MessageInfoStart(true);
+            Administrator.TimerMessageInfo();
         }
-        private bool EntityValidator(Schedule schedule) => Schedules.Count(x => x.DataTimeFinich == schedule.DataTimeFinich &&
-                                                                           x.DataTimeStart == schedule.DataTimeStart &&
-                                                                           x.id == schedule.id &&
-                                                                           x.NumberCabinet == schedule.NumberCabinet &&
-                                                                           schedule.idLessonEmloyee == x.idLessonEmloyee) == 1;
         #endregion
+
+        private bool EntityValidator(Schedule schedule) => Schedules.Count(
+                                                            x => x.DataTimeStart == schedule.DataTimeStart &&
+                                                            x.id == schedule.id &&
+                                                            x.NumberCabinet == schedule.NumberCabinet &&
+                                                            schedule.idLessonEmloyee == x.idLessonEmloyee) == 1 &&
+                                                            schedule.NumberCabinet != null &&
+                                                            schedule.DataTimeStart != null;
 
         #region Добавление новой строки в DataGrid
         private void ButtomAddClick(object sender, RoutedEventArgs e)
         {
-            var schedule = new Schedule();
+            var schedule = new Schedule() { DataTimeStart = new TimeSpan(9, 00, 0), Activ = true};
             Schedules.Add(schedule);
             DataGridSchedule.SelectedIndex = DataGridSchedule.Items.Count - 1;
             DataGridSchedule.ScrollIntoView(schedule);
@@ -116,40 +114,50 @@ namespace School.AdminPage
         #region Кнопка удаление
         private void ButtonDeleteClick(object sender, RoutedEventArgs e)
         {
-            try
+            ObservableCollection<Schedule> Schedule = new ObservableCollection<Schedule>();
+
+            foreach (Schedule item in DataGridSchedule.SelectedItems)
+                Schedule.Add(item);
+
+            foreach (Schedule item in Schedule)
             {
-                ObservableCollection<Schedule> Schedule = new ObservableCollection<Schedule>();
-
-                foreach (Schedule item in DataGridSchedule.SelectedItems)
-                    Schedule.Add(item);
-
-                foreach (Schedule item in Schedule)
+                if (item.NumberCabinet != null && item.idLessonEmloyee != null)
                 {
-                    if (item.NumberCabinet != null && item.DataTimeStart != null && item.idLessonEmloyee != null)
-                    {
-                        if (!(DBConnect.db.Schedule.Any(x => x.DataTimeFinich == item.DataTimeFinich &&
-                                                             x.DataTimeStart == item.DataTimeStart &&
-                                                             x.id == item.id &&
-                                                             x.NumberCabinet == item.NumberCabinet &&
-                                                             item.idLessonEmloyee == x.idLessonEmloyee)))
-                            continue;
-
-                        Schedules.Where(x => x.id == item.id).FirstOrDefault().Activ = false;
+                    if (!(DBConnect.db.Schedule.Any(x => x.DataTimeFinich == item.DataTimeFinich &&
+                                                            x.DataTimeStart == item.DataTimeStart &&
+                                                            x.id == item.id &&
+                                                            x.NumberCabinet == item.NumberCabinet &&
+                                                            item.idLessonEmloyee == x.idLessonEmloyee)))
                         continue;
-                    }
-                }
-                DataGridSchedule.Items.Refresh();
-                DBConnect.db.SaveChanges();
 
-                Administrator.MessageInfoStart(true);
-                Administrator.TimerMessageInfo();
+                    Schedules.Where(x => x.id == item.id).FirstOrDefault().Activ = false;
+                    continue;
+                }
+                Schedules.Remove(item);
             }
-            catch (Exception)
-            {
-                Administrator.MessageInfoStart(false);
-                Administrator.TimerMessageInfo();
-            }
+            DataGridSchedule.Items.Refresh();
+
+            Administrator.SaveChangeDB();
+
+            Administrator.MessageInfoStart(true);
+            Administrator.TimerMessageInfo();
         }
         #endregion
+
+        private void DataGridSchedule_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            foreach (var item in DataGridSchedule.SelectedItems)
+            {
+                MessageBox.Show((item as Schedule).LessonEmployee.IdEmployees.ToString());
+            }
+            
+            foreach (var item in DBConnect.db.LessonEmployee)
+            {
+                if (item.IdEmployees == (DataGridSchedule.SelectedItem as Schedule).LessonEmployee.IdEmployees)
+                {
+                    _lesson.Add(DBConnect.db.Lesson.FirstOrDefault(x => x.id == item.IdLesson));
+                }
+            }
+        }
     }
 }
