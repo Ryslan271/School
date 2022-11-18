@@ -26,3 +26,5 @@
 Подсказки при наведении
 ---------------------
 [https://metanit.com/sharp/wpf/5.3.php]: Всплывающие подсказки при наведении
+
+[Example][] [Example]: http://example.com/
