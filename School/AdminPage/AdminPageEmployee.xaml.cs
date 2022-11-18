@@ -84,7 +84,11 @@ namespace School.AdminPage
         #region Добавление новой строки в DataGrid
         private void ButtomAddClick(object sender, RoutedEventArgs e) 
         {
-            var employee = new Employee() { IdJobTitle = 2, Login = Employees.Last().Login + 1, Activ = true };
+            Employee employee;
+            if(Employees.Count > 0)
+                employee = new Employee() { IdJobTitle = 2, Login = Employees.Last().Login + 1, Activ = true };
+            else
+                employee = new Employee() { IdJobTitle = 2, Login = 232001, Activ = true };
             Employees.Add(employee);
             DataGridEmployee.SelectedIndex = DataGridEmployee.Items.Count - 1;
             DataGridEmployee.ScrollIntoView(employee);
