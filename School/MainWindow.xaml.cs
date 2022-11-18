@@ -26,6 +26,9 @@ namespace School
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        IEnumerable<Employee> employees = DBConnect.db.Employee;
+        IEnumerable<Student> students = DBConnect.db.Student;
         public MainWindow()
         {
 
@@ -49,42 +52,41 @@ namespace School
                     return;
                 }
                 #region check login and password
-                using (Entities school1Entities = new Entities())
+
+                foreach (var entity in employees.Where(employee => employee.IdJobTitle == 2))
                 {
-                    
-                    foreach(var entity in school1Entities.Employee.Where(employee => employee.IdJobTitle == 2))
+                    if (Convert.ToInt32(LoginTextBox.Text) == entity.Login && Convert.ToInt32(PasswordBox.Password) == entity.Password && entity.Activ == true)
                     {
-                        if(Convert.ToInt32(LoginTextBox.Text) == entity.Login && Convert.ToInt32(PasswordBox.Password) == entity.Password && entity.Activ == true)
-                        {
-                            IdUSer.Id = entity.id;
-                            new Teacher().Show();
-                            Hide();
-                            return;
-                        }
-                    }
-
-                    foreach (var entity in school1Entities.Employee.Where(employee => employee.IdJobTitle != 2))
-                    {
-                        if (Convert.ToInt32(LoginTextBox.Text) == entity.Login && Convert.ToInt32(PasswordBox.Password) == entity.Password && entity.Activ == true)
-                        {
-                            IdUSer.Id = entity.id;
-                            new Administrator().Show();
-                            Hide();
-                            return;
-                        }
-                    }
-
-                    foreach (var entity in school1Entities.Student)
-                    {
-                        if (Convert.ToInt32(LoginTextBox.Text) == entity.Login && PasswordBox.Password == entity.Password && entity.Activ == true)
-                        {
-                            IdUSer.Id = entity.id;
-                            new StudentWindow().Show();
-                            Hide();
-                            return;
-                        }
+                        IdUSer.Id = entity.id;
+                        new Teacher().Show();
+                        Hide();
+                        return;
                     }
                 }
+
+                foreach (var entity in employees.Where(employee => employee.IdJobTitle != 2))
+                {
+                    if (Convert.ToInt32(LoginTextBox.Text) == entity.Login && Convert.ToInt32(PasswordBox.Password) == entity.Password  && entity.Activ == true)
+                    {
+                        IdUSer.Id = entity.id;
+                        new Administrator().Show();
+                        Hide();
+                        return;
+                    }
+                }
+
+                foreach (var entity in students)
+                {
+                    if (Convert.ToInt32(LoginTextBox.Text) == entity.Login && PasswordBox.Password == entity.Password && entity.Activ == true)
+                    {
+                        IdUSer.Id = entity.id;
+                        new StudentWindow().Show();
+                        Hide();
+                        return;
+                    }
+                }
+
+
 
                 InfoMessage.Text = "Логин или пароль неверный";
                 #endregion

@@ -3,7 +3,7 @@
 
 
     <Style x:Key="StyleGrid">
-        <Setter Property="Grid.Background" Value="#FFECEDFF"/>
+        <Setter Property="Grid.Background" Value="#FFE2E2E2"/>
         <Setter Property="TextBlock.Foreground" Value="#FF2B2B2B"/>
     </Style>
 
@@ -22,8 +22,22 @@
     </Style>
 
     <Style TargetType="ListBox">
-        <Setter Property="Background" Value="#FFFFF4F4"/>
+        <Setter Property="Background" Value="White"/>
         <Setter Property="Foreground" Value="#FF2B2B2B"/>
     </Style>
-    
+
+    <Style TargetType="DataGrid">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="Foreground" Value="#FF2B2B2B"/>
+    </Style>
+
+    <Style TargetType="DataGridColumnHeader">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="Foreground" Value="#FF2B2B2B"/>
+    </Style>
+
+    <Style TargetType="Button">
+        <Setter Property="Background" Value="White"/>
+    </Style>
+
 </ResourceDictionary>
