@@ -45,7 +45,7 @@
         <Setter Property="Foreground" Value="#FF2B2B2B"/>
         
     </Style>
-    <Style TargetType="Button">
+    <Style TargetType="Button" x:Key="ButtonNotInAdmin">
         <Setter Property="Background" Value="White"/>
         <Setter Property="Template">
             <Setter.Value>

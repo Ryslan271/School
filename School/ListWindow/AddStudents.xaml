@@ -23,6 +23,6 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Content="Добавить в класс" Grid.Row="2" Click="Button_Click"/>
+        <Button Content="Добавить в класс" Grid.Row="2" Click="Button_Click" />
     </Grid>
 </Window>

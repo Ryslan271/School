@@ -43,7 +43,7 @@
         <Setter Property="Foreground" Value="#FFDEDEDE"/>
 
     </Style>
-    <Style TargetType="Button">
+    <Style TargetType="Button" x:Key="ButtonNotInAdmin">
         <Setter Property="Background" Value="#FF373737"/>
         <Setter Property="Foreground" Value="#FFECECEC"/>
         <Setter Property="Template">
