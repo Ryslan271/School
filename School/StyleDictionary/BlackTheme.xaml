@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="StyleGrid">
-        <Setter Property="Grid.Background" Value="Black"/>
+        <Setter Property="Grid.Background" Value="#FF272727"/>
         <Setter Property="TextBlock.Foreground" Value="#FFA78F8F"/>
     </Style>
 
@@ -23,5 +23,45 @@
     <Style TargetType="ListBox" x:Name="StyleListBox">
         <Setter Property="Background" Value="#FF373737"/>
         <Setter Property="Foreground" Value="#FFDEDEDE"/>
+    </Style>
+
+    <Style TargetType="DataGrid">
+        <Setter Property="Background" Value="#FF373737"/>
+        <Setter Property="Foreground" Value="#FFDEDEDE"/>
+    </Style>
+
+    <Style TargetType="DataGridColumnHeader">
+        <Setter Property="Background" Value="#00000000"/>
+        <Setter Property="Foreground" Value="#FFDEDEDE"/>
+        <Setter Property="BorderBrush" Value="#FFDEDEDE"/>
+        <Setter Property="BorderThickness" Value="0 1 1 1" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+    </Style>
+
+    <Style TargetType="DataGridCell">
+        <Setter Property="Background" Value="#FF373737"/>
+        <Setter Property="Foreground" Value="#FFDEDEDE"/>
+
+    </Style>
+    <Style TargetType="Button">
+        <Setter Property="Background" Value="#FF373737"/>
+        <Setter Property="Foreground" Value="#FFECECEC"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="10"
+                                Background="{TemplateBinding Background}">
+
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect Color="#FFE0E0E0" Direction="310" ShadowDepth="3" Opacity="0.3"/>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>

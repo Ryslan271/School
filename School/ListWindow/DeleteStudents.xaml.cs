@@ -88,5 +88,10 @@ namespace School.ListWindow
         {
             deleteStudentsLoad = true;
         }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            deleteStudentsLoad = false;
+        }
     }
 }

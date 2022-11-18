@@ -86,15 +86,13 @@ namespace School.ListWindow
 
             ComboBox cb = (ComboBox)sender;
 
-            foreach (var entity in studentlesson.Select(s => s.IdStudent).Distinct())
+            foreach (var entity in students.Select(s => s.id).Except(lesson.Where(l => l.Name.Equals(lessonList.SelectedItem.ToString())).SelectMany(l => l.StudentLesson).Select(l => l.IdStudent)))
             {
-                foreach (var item in lesson.Where(l => l.Name.Equals(cb.SelectedValue)).Select(l => l.id).ToList().Except(studentlesson.Where(s => s.IdStudent == entity && s.IdLesson == lesson.Where(l => l.Name.Equals(cb.SelectedValue)).Select(l => l.id).FirstOrDefault()).Select(s => s.IdLesson).ToList()))
-                {
-                    missingStudentList.Add((from st in students
-                                            where st.id == entity
-                                            select st.Name + " " + st.Surname + " " + st.Lastname).FirstOrDefault());
-                }
+                missingStudentList.Add((from st in students
+                                       where st.id == entity
+                                       select st.Name + " " + st.Surname + " " + st.Lastname).FirstOrDefault());
             }
+            
             if (missingStudentList.Count > 0)
                 studentList.ItemsSource = missingStudentList;
             else
@@ -105,6 +103,11 @@ namespace School.ListWindow
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             AddStudentLoad = true;
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            AddStudentLoad = false;
         }
     }
 }

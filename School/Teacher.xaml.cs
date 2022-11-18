@@ -81,7 +81,6 @@ namespace School
                                             DataTimeStart = schedule.DataTimeStart.ToString().Substring(0,5),
                                             DataTimeFinich = schedule.DataTimeFinich.ToString().Substring(0, 5)
                                         }).ToList();
-            
             UpdateInfoMessage();
         }
 

@@ -27,7 +27,7 @@
         <TextBlock x:Name="InfoMessage" Margin="0,67,0,0" Text="" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="Red" Grid.Row="5" Grid.ColumnSpan="3"/>
         <TextBox x:Name="LoginTextBox" Grid.Row="2" Grid.Column="1" Style="{DynamicResource StyleTextBox}"/>
         <PasswordBox x:Name="PasswordBox" Grid.Row="4" Grid.Column="1" Style="{DynamicResource StylePaswordBox}"/>
-        <Button x:Name="BtnInput" Grid.Column="1" Width="50" Margin="0,16,0, 0" HorizontalAlignment="Center"  VerticalAlignment="Top" Content="Войти" Click="BtnInput_Click" Grid.Row="5" RenderTransformOrigin="0.5,0.5">
+        <Button x:Name="BtnInput" Grid.Column="1" Width="70"  Height="20" Margin="0,16,0, 0" HorizontalAlignment="Center"  FontSize="12" VerticalAlignment="Top" Content="Войти" Click="BtnInput_Click" Grid.Row="5" RenderTransformOrigin="0.5,0.5">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
