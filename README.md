@@ -27,4 +27,4 @@
 ---------------------
 [https://metanit.com/sharp/wpf/5.3.php]: Всплывающие подсказки при наведении
 
-[Example]: http://example.com/
+[Example]:http://example.com/
