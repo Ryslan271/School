@@ -5,6 +5,7 @@
     <Style x:Key="StyleGrid">
         <Setter Property="Grid.Background" Value="#FFE2E2E2"/>
         <Setter Property="TextBlock.Foreground" Value="#FF2B2B2B"/>
+        <Setter Property="TextBlock.FontFamily" Value="Bahnschrift SemiBold"/>
     </Style>
 
     <Style TargetType="TextBox" x:Key="StyleTextBox">
@@ -32,12 +33,37 @@
     </Style>
 
     <Style TargetType="DataGridColumnHeader">
-        <Setter Property="Background" Value="White"/>
+        <Setter Property="Background" Value="#00000000"/>
         <Setter Property="Foreground" Value="#FF2B2B2B"/>
+        <Setter Property="BorderBrush" Value="#FF2B2B2B"/>
+        <Setter Property="BorderThickness" Value="0 1 1 1" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
     </Style>
 
+    <Style TargetType="DataGridCell">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="Foreground" Value="#FF2B2B2B"/>
+        
+    </Style>
     <Style TargetType="Button">
         <Setter Property="Background" Value="White"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="10"
+                                Background="{TemplateBinding Background}">
+
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect Color="Black" Direction="310" ShadowDepth="5" Opacity="0.3"/>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 </ResourceDictionary>

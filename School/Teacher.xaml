@@ -19,20 +19,23 @@
             <ColumnDefinition Width="200*"/>
         </Grid.ColumnDefinitions>
 
+
         <Image Source="Picture\TeacherPic.png" VerticalAlignment="Top"/>
-        <Image Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Top" Width="20" Height="20" Margin="0 5 10 0" MouseUp="Image_MouseUp_1"  Style="{DynamicResource imageStyle}"/>
+        <Image Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Top" Panel.ZIndex="3" Width="20" Height="20" Margin="0 5 10 0" MouseUp="Image_MouseUp_1"/>
         <TextBlock x:Name="NameTeacher" Grid.Column="1" Grid.ColumnSpan="2" Height="30" Text="" VerticalAlignment="Top"/>
         <TextBlock x:Name="ClassTeacher" Grid.Column="1" Grid.ColumnSpan="2" Height="80" Text="" VerticalAlignment="Top" Margin="0 30 0 0"/>
         <TextBlock x:Name="titleList" Text="Журнал посещения за " Grid.ColumnSpan="4" Height="28" VerticalAlignment="Top" Grid.Column="3"/>
         <ComboBox x:Name="selectLessen"  Grid.Column="3" VerticalAlignment="Top" Margin=" 0 28 10 0" SelectionChanged="selectLessen_SelectionChanged"/>
-        <Button x:Name="addStudent" Content="Добавить ученика" Grid.Column="1" Grid.Row="1" Margin="50 10 20 0" Click="addStudent_Click" />
+        <Button x:Name="addStudent" Content="Добавить ученика" Grid.Column="1" Grid.Row="1" Margin="50 10 20 0" Click="addStudent_Click" >
+            
+        </Button>
         <Button x:Name="deleteStudent" Content="Убрать ученика" Grid.Column="2" Grid.Row="1" Margin="20 10 50 0" Click="deleteStudent_Click"/>
-        <DataGrid x:Name="scheduleTable" AutoGenerateColumns="False" Grid.Column="1" Grid.ColumnSpan="2" Margin="10 40 30 20">
+        <DataGrid x:Name="scheduleTable" IsReadOnly="True" HorizontalScrollBarVisibility="Hidden" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" AutoGenerateColumns="False" Grid.Column="1" Grid.ColumnSpan="2" Margin="10 40 30 20">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Кабинет" Binding="{Binding NumberCabinet}" />
-                <DataGridTextColumn Header="Урок" Binding="{Binding idLessonEmployee}"/>
-                <DataGridTextColumn Header="Начало урока" Binding="{Binding DataTimeStart}"/>
-                <DataGridTextColumn Header="Конец урока" Binding="{Binding DataTimeFinich}"/>
+                <DataGridTextColumn Width="1*" Header="Кабинет" Binding="{Binding NumberCabinet}" />
+                <DataGridTextColumn Width="1*" Header="Урок" Binding="{Binding idLessonEmployee}"/>
+                <DataGridTextColumn Width="1*" Header="Начало урока" Binding="{Binding DataTimeStart}"/>
+                <DataGridTextColumn Width="1*" Header="Конец урока" Binding="{Binding DataTimeFinich}"/>
             </DataGrid.Columns>
         </DataGrid>
         <TextBlock x:Name="infoMessageStudent" Grid.Column="3" Foreground="Gray" Panel.ZIndex="1" TextAlignment="Center" VerticalAlignment="Center"/>
