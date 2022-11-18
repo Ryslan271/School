@@ -20,13 +20,22 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="0.3*"/>
         </Grid.ColumnDefinitions>
-        <Image Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Width="20" Height="20" Margin="0 10 10 0" MouseUp="Image_MouseUp"/> 
+        <Image Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Width="20" Height="20" Margin="0 10 10 0" MouseUp="Image_MouseUp"/>
         <Image Grid.Column="1" HorizontalAlignment="Center" Source="Picture/WhiteLogo.png" Width="188"/>
         <TextBlock Text="Логин" Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom"/>
         <TextBlock Text="Пароль" Grid.Row="3" Grid.Column="1" VerticalAlignment="Bottom"/>
         <TextBlock x:Name="InfoMessage" Margin="0,67,0,0" Text="" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="Red" Grid.Row="5" Grid.ColumnSpan="3"/>
         <TextBox x:Name="LoginTextBox" Grid.Row="2" Grid.Column="1" Style="{DynamicResource StyleTextBox}"/>
         <PasswordBox x:Name="PasswordBox" Grid.Row="4" Grid.Column="1" Style="{DynamicResource StylePaswordBox}"/>
-        <Button x:Name="BtnInput" Grid.Column="1" Width="50" Margin="0,16,0, 0" HorizontalAlignment="Center"  VerticalAlignment="Top" Content="Войти" Click="BtnInput_Click" Grid.Row="5"/>
+        <Button x:Name="BtnInput" Grid.Column="1" Width="50" Margin="0,16,0, 0" HorizontalAlignment="Center"  VerticalAlignment="Top" Content="Войти" Click="BtnInput_Click" Grid.Row="5" RenderTransformOrigin="0.5,0.5">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform X="0"/>
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
     </Grid>
 </Window>
