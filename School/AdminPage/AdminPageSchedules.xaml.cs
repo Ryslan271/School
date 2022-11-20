@@ -1,20 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace School.AdminPage
 {
@@ -25,6 +15,7 @@ namespace School.AdminPage
     {
         private ObservableCollection<Employee> _employees;
         private ObservableCollection<Lesson> _lesson;
+        private ObservableCollection<LessonEmployee> _lessonEmployee;
         public ObservableCollection<Employee> Employees
         {
             get { return _employees; }
@@ -36,6 +27,16 @@ namespace School.AdminPage
             set { _lesson = value; }
         }
 
+        public ObservableCollection<Week> WeekDays
+        {
+            get { return (ObservableCollection<Week>)GetValue(WeekDaysProperty); }
+            set { SetValue(WeekDaysProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for WeekDays.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty WeekDaysProperty =
+            DependencyProperty.Register("WeekDays", typeof(ObservableCollection<Week>), typeof(AdminPageSchedules));
+
         public ObservableCollection<Schedule> Schedules
         {
             get { return (ObservableCollection<Schedule>)GetValue(SchedulesProperty); }
@@ -46,14 +47,22 @@ namespace School.AdminPage
         public static readonly DependencyProperty SchedulesProperty =
             DependencyProperty.Register("Schedules", typeof(ObservableCollection<Schedule>), typeof(AdminPageSchedules));
 
-
         public AdminPageSchedules()
         {
             DBConnect.db.Schedule.Load();
             Schedules = DBConnect.db.Schedule.Local;
 
+            DBConnect.db.LessonEmployee.Load();
+            _lessonEmployee = DBConnect.db.LessonEmployee.Local;
+
             DBConnect.db.Employee.Load();
             _employees = DBConnect.db.Employee.Local;
+
+            DBConnect.db.Week.Load();
+            WeekDays = DBConnect.db.Week.Local;
+
+            DBConnect.db.Lesson.Load();
+            _lesson = DBConnect.db.Lesson.Local;
 
             InitializeComponent();
 
@@ -98,13 +107,15 @@ namespace School.AdminPage
                                                             x.id == schedule.id &&
                                                             x.NumberCabinet == schedule.NumberCabinet &&
                                                             schedule.idLessonEmloyee == x.idLessonEmloyee) == 1 &&
-                                                            schedule.NumberCabinet != null &&
+                                                            Schedules.Any(x => x.id == schedule.id &&
+                                                            x.idWeek == x.idWeek &&
+                                                            x.DataTimeStart != x.DataTimeStart) &&
                                                             schedule.DataTimeStart != null;
 
         #region Добавление новой строки в DataGrid
         private void ButtomAddClick(object sender, RoutedEventArgs e)
         {
-            var schedule = new Schedule() { DataTimeStart = new TimeSpan(9, 00, 0), Activ = true};
+            var schedule = new Schedule() { DataTimeStart = new TimeSpan(9, 45, 0), Activ = true};
             Schedules.Add(schedule);
             DataGridSchedule.SelectedIndex = DataGridSchedule.Items.Count - 1;
             DataGridSchedule.ScrollIntoView(schedule);
@@ -116,25 +127,26 @@ namespace School.AdminPage
         {
             ObservableCollection<Schedule> Schedule = new ObservableCollection<Schedule>();
 
-            foreach (Schedule item in DataGridSchedule.SelectedItems)
+            foreach (Schedule item in DataGridSchedule.SelectedItems) 
                 Schedule.Add(item);
 
             foreach (Schedule item in Schedule)
             {
-                if (item.NumberCabinet != null && item.idLessonEmloyee != null)
+                if (item.NumberCabinet.ToString() != null && item.idWeek.ToString() != null)
                 {
-                    if (!(DBConnect.db.Schedule.Any(x => x.DataTimeFinich == item.DataTimeFinich &&
-                                                            x.DataTimeStart == item.DataTimeStart &&
-                                                            x.id == item.id &&
-                                                            x.NumberCabinet == item.NumberCabinet &&
-                                                            item.idLessonEmloyee == x.idLessonEmloyee)))
+                    if (DBConnect.db.Schedule.Any(x => x.DataTimeFinich == item.DataTimeFinich &&
+                                                        x.DataTimeStart == item.DataTimeStart &&
+                                                        x.id == item.id &&
+                                                        x.NumberCabinet == item.NumberCabinet &&
+                                                        item.idLessonEmloyee == x.idLessonEmloyee))
+                    {
+                        Schedules.Where(x => x.id == item.id).FirstOrDefault().Activ = false;
                         continue;
-
-                    Schedules.Where(x => x.id == item.id).FirstOrDefault().Activ = false;
-                    continue;
+                    }
                 }
                 Schedules.Remove(item);
             }
+
             DataGridSchedule.Items.Refresh();
 
             Administrator.SaveChangeDB();
@@ -146,17 +158,9 @@ namespace School.AdminPage
 
         private void DataGridSchedule_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            foreach (var item in DataGridSchedule.SelectedItems)
+            if (e.EditingElement is ComboBox editingCombox && editingCombox.SelectedItem is Employee selectedEmployee)
             {
-                MessageBox.Show((item as Schedule).LessonEmployee.IdEmployees.ToString());
-            }
-            
-            foreach (var item in DBConnect.db.LessonEmployee)
-            {
-                if (item.IdEmployees == (DataGridSchedule.SelectedItem as Schedule).LessonEmployee.IdEmployees)
-                {
-                    _lesson.Add(DBConnect.db.Lesson.FirstOrDefault(x => x.id == item.IdLesson));
-                }
+                _lesson = new ObservableCollection<Lesson>(_lessonEmployee.Where(x => x.IdEmployees == selectedEmployee.id).Select(i => i.Lesson));
             }
         }
     }

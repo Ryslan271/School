@@ -127,5 +127,11 @@ namespace School.AdminPage
 
         }
         #endregion
+
+        private void ButtonClickSchedule(object sender, RoutedEventArgs e)
+        {
+            new ScheduleEditEmployee(DataGridEmployee.SelectedItem as Employee).Show();
+            Administrator.Instance.Hide();
+        }
     }
 }

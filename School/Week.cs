@@ -15,28 +15,27 @@ namespace School
 using System;
     using System.Collections.Generic;
     
-public partial class Schedule
+public partial class Week
 {
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+    public Week()
+    {
+
+        this.Schedule = new HashSet<Schedule>();
+
+    }
+
 
     public int id { get; set; }
 
-    public int NumberCabinet { get; set; }
-
-    public int idLessonEmloyee { get; set; }
-
-    public System.TimeSpan DataTimeStart { get; set; }
-
-    public System.TimeSpan DataTimeFinich { get; set; }
-
-    public Nullable<int> idWeek { get; set; }
-
-    public bool Activ { get; set; }
+    public string Name { get; set; }
 
 
 
-    public virtual LessonEmployee LessonEmployee { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
-    public virtual Week Week { get; set; }
+    public virtual ICollection<Schedule> Schedule { get; set; }
 
 }
 

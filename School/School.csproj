@@ -88,6 +88,9 @@
     <Compile Include="AdminPage\AdminPageStudents.xaml.cs">
       <DependentUpon>AdminPageStudents.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AdminPage\ScheduleEditEmployee.xaml.cs">
+      <DependentUpon>ScheduleEditEmployee.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Class.cs">
       <DependentUpon>School.tt</DependentUpon>
     </Compile>
@@ -149,6 +152,9 @@
     <Compile Include="VisitLeson.cs">
       <DependentUpon>School.tt</DependentUpon>
     </Compile>
+    <Compile Include="Week.cs">
+      <DependentUpon>School.tt</DependentUpon>
+    </Compile>
     <Page Include="Administrator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -172,6 +178,10 @@
     <Page Include="AdminPage\AdminPageStudents.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AdminPage\ScheduleEditEmployee.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="InfoMessageBox.xaml">
       <SubType>Designer</SubType>

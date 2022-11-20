@@ -48,9 +48,11 @@ public partial class Entities : DbContext
 
     public virtual DbSet<StudentLesson> StudentLesson { get; set; }
 
+    public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+
     public virtual DbSet<VisitLeson> VisitLeson { get; set; }
 
-    public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+    public virtual DbSet<Week> Week { get; set; }
 
 }
 

@@ -34,6 +34,7 @@
         </DataGrid>
 
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 10 20 10">
+            <Button Content="Расписание" Margin="0 0 20 0" Padding="12 5" Click="ButtonClickSchedule"/>
             <Button Content="Удалить" Margin="0 0 20 0" Padding="12 5" Click="ButtonDeleteClick"/>
             <Button Content="Добавить" Margin="0 0 20 0" Padding="12 5" Click="ButtomAddClick"/>
             <Button Content="Сохранить" Padding="12 0 12 0" Click="ButtonSaveClick"/>

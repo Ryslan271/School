@@ -34,6 +34,21 @@
                         </Style>
                     </DataGridComboBoxColumn.EditingElementStyle>
                 </DataGridComboBoxColumn>
+                <DataGridComboBoxColumn Header="День недели" Width="*"
+                                        SelectedItemBinding="{Binding Path=Week}"
+                                        DisplayMemberPath="Name"
+                                        SelectedValuePath="id">
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.WeekDays, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" />
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.WeekDays, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" />
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
                 <DataGridComboBoxColumn Header="Название урока" Width="*"
                                         SelectedItemBinding="{Binding Path=LessonEmployee.Lesson}"
                                         DisplayMemberPath="Name"
