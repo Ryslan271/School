@@ -64,6 +64,9 @@ namespace School.AdminPage
         #region Сохранение 
         private void ButtonSaveClick(object sender, RoutedEventArgs e)
         {
+            if (DataGridSchedule.SelectedItem != null && Administrator.Ask(true) == false)
+                return;
+
             if (DBConnect.db.ChangeTracker.HasChanges() == false)
                 return;
 
@@ -117,6 +120,12 @@ namespace School.AdminPage
         #region Кнопка удаление
         private void ButtonDeleteClick(object sender, RoutedEventArgs e)
         {
+            if (DataGridSchedule.SelectedItem == null)
+                return;
+
+            if (Administrator.Ask(false) == false)
+                return;
+
             ObservableCollection<Schedule> Schedule = new ObservableCollection<Schedule>();
 
             foreach (Schedule item in DataGridSchedule.SelectedItems)

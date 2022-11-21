@@ -1,20 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace School.AdminPage
 {
@@ -72,7 +59,10 @@ namespace School.AdminPage
             Administrator.TimerMessageInfo();
 
         }
-        private bool EntityValidator(Employee employee) => 
+        private bool EntityValidator(Employee employee) =>
+            employee.Lastname != "" &&
+            employee.Name != "" &&
+            employee.Surname != "" &&
             employee.Lastname != null &&
             employee.Name != null &&
             employee.Surname != null &&
@@ -81,10 +71,10 @@ namespace School.AdminPage
         #endregion
 
         #region Добавление новой строки в DataGrid
-        private void ButtomAddClick(object sender, RoutedEventArgs e) 
+        private void ButtomAddClick(object sender, RoutedEventArgs e)
         {
             Employee employee;
-            if(Employees.Count > 0)
+            if (Employees.Count > 0)
                 employee = new Employee() { IdJobTitle = 2, Login = Employees.Last().Login + 1, Activ = true };
             else
                 employee = new Employee() { IdJobTitle = 2, Login = 232001, Activ = true };
@@ -97,7 +87,10 @@ namespace School.AdminPage
         #region Кнопка удаление
         private void ButtonDeleteClick(object sender, RoutedEventArgs e)
         {
-            if (DataGridEmployee.SelectedItem != null && Administrator.Ask(false) == false)
+            if (DataGridEmployee.SelectedItem == null)
+                return;
+
+            if (Administrator.Ask(false) == false)
                 return;
 
             ObservableCollection<Employee> employees = new ObservableCollection<Employee>();

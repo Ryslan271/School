@@ -111,7 +111,10 @@ namespace School.AdminPage
         #region Кнопка удаление
         private void ButtonDeleteClick(object sender, RoutedEventArgs e)
         {
-            if (DataGridLessonEmployees.SelectedItem != null && Administrator.Ask(false) == false)
+            if (DataGridLessonEmployees.SelectedItem == null)
+                return;
+
+            if (Administrator.Ask(false) == false)
                 return;
 
             ObservableCollection<LessonEmployee> essonEmployees = new ObservableCollection<LessonEmployee>();

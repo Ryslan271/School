@@ -1,20 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace School.AdminPage
 {
@@ -23,19 +10,18 @@ namespace School.AdminPage
     /// </summary>
     public partial class AdminPageLesson : Page
     {
-        public ObservableCollection<Lesson> Lessons // вместо студента лесон
+        public ObservableCollection<Lesson> Lessons 
         {
             get { return (ObservableCollection<Lesson>)GetValue(LessonsProperty); }
             set { SetValue(LessonsProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty LessonsProperty =
             DependencyProperty.Register("Lessons", typeof(ObservableCollection<Lesson>), typeof(AdminPageLesson));
         public AdminPageLesson()
         {
             Lessons = DBConnect.db.Lesson.Local;
-            
+
             InitializeComponent();
         }
 
@@ -88,7 +74,10 @@ namespace School.AdminPage
         #region Кнопка удаление
         private void ButtonDeleteClick(object sender, RoutedEventArgs e)
         {
-            if (DataGridLessons.SelectedItem != null && Administrator.Ask(false) == false)
+            if (DataGridLessons.SelectedItem == null)
+                return;
+
+            if (Administrator.Ask(false) == false)
                 return;
 
             ObservableCollection<Lesson> lessons = new ObservableCollection<Lesson>();
