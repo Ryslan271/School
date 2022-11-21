@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -78,7 +79,7 @@ namespace School.AdminPage
                     return false;
                 }
 
-                schedule.DataTimeFinich = schedule.DataTimeStart + new TimeSpan(0, 40, 0);
+                schedule.DataTimeFinich = schedule.DataTimeStart + new TimeSpan(0, 45, 0);
 
                 return true;
             });
@@ -99,12 +100,14 @@ namespace School.AdminPage
                                                             x.NumberCabinet == schedule.NumberCabinet &&
                                                             schedule.idLessonEmloyee == x.idLessonEmloyee) == 1 &&
                                                             schedule.NumberCabinet != null &&
-                                                            schedule.DataTimeStart != null;
+                                                            schedule.DataTimeStart != null &&
+                                                            Schedules.Where(x => x.DataTimeStart < schedule.DataTimeStart ||
+                                                            x.DataTimeStart > schedule.DataTimeStart + new TimeSpan(0, 45, 0)).Count() == 1;
 
         #region Добавление новой строки в DataGrid
         private void ButtomAddClick(object sender, RoutedEventArgs e)
         {
-            var schedule = new Schedule() { DataTimeStart = new TimeSpan(9, 00, 0), Activ = true };
+            var schedule = new Schedule() { Activ = true };
             Schedules.Add(schedule);
             DataGridSchedule.SelectedIndex = DataGridSchedule.Items.Count - 1;
             DataGridSchedule.ScrollIntoView(schedule);
@@ -143,5 +146,19 @@ namespace School.AdminPage
             Administrator.TimerMessageInfo();
         }
         #endregion
+
+        private void DataGridSchedule_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            if (!(e.Column.Header.ToString() == "Начало урока") || e.EditingElement is TextBox editingElement == false)
+                return;
+
+            Match match = Regex.Match(editingElement.Text.Trim(), @"^(?:(?<Datetime>\d{1,2}:(?:\d{1,2}))|(?<Hours>\d{1,2}))");
+
+            string dateTime = match.Groups["Datetime"].Value;
+            if (match.Success)
+                editingElement.Text = dateTime == string.Empty ? $"{match.Groups["Hours"].Value}:00" : dateTime;
+            else
+                editingElement.Text = null;
+        }
     }
 }

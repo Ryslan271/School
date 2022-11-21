@@ -17,7 +17,7 @@
 
         <TextBlock Text="Расписание"/>
     
-        <DataGrid Grid.Row="1" CanUserAddRows="False" ItemsSource="{Binding Schedules}" AutoGenerateColumns="False" x:Name="DataGridSchedule">
+        <DataGrid Grid.Row="1" CanUserAddRows="False" ItemsSource="{Binding Schedules}" CellEditEnding="DataGridSchedule_CellEditEnding" AutoGenerateColumns="False" x:Name="DataGridSchedule">
             <DataGrid.Columns>
                 <DataGridComboBoxColumn Header="Учитель" Width="*"
                                         SelectedItemBinding="{Binding Path=LessonEmployee.Employee}"
@@ -49,21 +49,8 @@
                         </Style>
                     </DataGridComboBoxColumn.EditingElementStyle>
                 </DataGridComboBoxColumn>
-                <DataGridTextColumn Width="*" Header="Номер кабинета" Binding="{Binding StringFormat='{}{0}', Path=NumberCabinet}"/>
-                <DataGridTemplateColumn Width="*" Header="Дата и время проведения">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock>
-                                <TextBlock.Text>
-                                    <MultiBinding StringFormat="{}{0}:{1}">
-                                        <Binding Path="DataTimeStart.Hours"/>
-                                        <Binding Path="DataTimeStart.Minutes"/>
-                                    </MultiBinding>
-                                </TextBlock.Text>
-                            </TextBlock>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                <DataGridTextColumn Width="*" Header="Номер кабинета" Binding="{Binding StringFormat='{}{0}', Path=NumberCabinet, TargetNullValue='—'}"/>
+                <DataGridTextColumn Width="*" Header="Начало урока" Binding="{Binding StringFormat=hh\\:mm, Path=DataTimeStart, TargetNullValue='—'}"/>
                 <DataGridCheckBoxColumn Width="2*" Header="Удален/Активен" Binding="{Binding Path=Activ}"/>
             </DataGrid.Columns>
         </DataGrid>
