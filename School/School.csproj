@@ -82,6 +82,9 @@
     <Compile Include="AdminPage\AdminPageLesson.xaml.cs">
       <DependentUpon>AdminPageLesson.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AdminPage\AdminPageLessonEmployees.xaml.cs">
+      <DependentUpon>AdminPageLessonEmployees.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdminPage\AdminPageSchedules.xaml.cs">
       <DependentUpon>AdminPageSchedules.xaml</DependentUpon>
     </Compile>
@@ -162,6 +165,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="AdminPage\AdminPageLesson.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminPage\AdminPageLessonEmployees.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

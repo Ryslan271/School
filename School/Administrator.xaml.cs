@@ -36,6 +36,7 @@ namespace School
         private void ButtonClickSchedules(object sender, RoutedEventArgs e) => PageAdmin.Navigate(new AdminPage.AdminPageSchedules());
         private void ButtonClickClass(object sender, RoutedEventArgs e) => PageAdmin.Navigate(new AdminPage.AdminPageClass());
         private void ButtonClickLesson(object sender, RoutedEventArgs e) => PageAdmin.Navigate(new AdminPage.AdminPageLesson());
+        private void ButtonClickLessonEmployee(object sender, RoutedEventArgs e) => PageAdmin.Navigate(new AdminPage.AdminPageLessonEmployees());
         public static bool Ask(bool flag)
         {
             if (flag == true)
@@ -84,5 +85,6 @@ namespace School
             Instance.MessageInfo.Text = "";
         }
         #endregion
+
     }
 }

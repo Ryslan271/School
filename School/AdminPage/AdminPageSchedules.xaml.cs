@@ -25,6 +25,8 @@ namespace School.AdminPage
     {
         private ObservableCollection<Employee> _employees;
         private ObservableCollection<Lesson> _lesson;
+        private ObservableCollection<LessonEmployee> _lessonEmployee;
+
         public ObservableCollection<Employee> Employees
         {
             get { return _employees; }
@@ -35,14 +37,12 @@ namespace School.AdminPage
             get { return _lesson; }
             set { _lesson = value; }
         }
-
         public ObservableCollection<Schedule> Schedules
         {
             get { return (ObservableCollection<Schedule>)GetValue(SchedulesProperty); }
             set { SetValue(SchedulesProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for Schedules.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SchedulesProperty =
             DependencyProperty.Register("Schedules", typeof(ObservableCollection<Schedule>), typeof(AdminPageSchedules));
 
@@ -54,6 +54,11 @@ namespace School.AdminPage
 
             DBConnect.db.Employee.Load();
             _employees = DBConnect.db.Employee.Local;
+
+            DBConnect.db.LessonEmployee.Load();
+            _lessonEmployee = DBConnect.db.LessonEmployee.Local;
+
+            _lesson = DBConnect.db.Lesson.Local;
 
             InitializeComponent();
 
@@ -78,7 +83,7 @@ namespace School.AdminPage
                     return false;
                 }
 
-                schedule.DataTimeFinich = schedule.DataTimeStart + new TimeSpan(0, 40 , 0);
+                schedule.DataTimeFinich = schedule.DataTimeStart + new TimeSpan(0, 40, 0);
 
                 return true;
             });
@@ -104,7 +109,7 @@ namespace School.AdminPage
         #region Добавление новой строки в DataGrid
         private void ButtomAddClick(object sender, RoutedEventArgs e)
         {
-            var schedule = new Schedule() { DataTimeStart = new TimeSpan(9, 00, 0), Activ = true};
+            var schedule = new Schedule() { DataTimeStart = new TimeSpan(9, 00, 0), Activ = true };
             Schedules.Add(schedule);
             DataGridSchedule.SelectedIndex = DataGridSchedule.Items.Count - 1;
             DataGridSchedule.ScrollIntoView(schedule);
@@ -143,21 +148,5 @@ namespace School.AdminPage
             Administrator.TimerMessageInfo();
         }
         #endregion
-
-        private void DataGridSchedule_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {
-            foreach (var item in DataGridSchedule.SelectedItems)
-            {
-                MessageBox.Show((item as Schedule).LessonEmployee.IdEmployees.ToString());
-            }
-            
-            foreach (var item in DBConnect.db.LessonEmployee)
-            {
-                if (item.IdEmployees == (DataGridSchedule.SelectedItem as Schedule).LessonEmployee.IdEmployees)
-                {
-                    _lesson.Add(DBConnect.db.Lesson.FirstOrDefault(x => x.id == item.IdLesson));
-                }
-            }
-        }
     }
 }

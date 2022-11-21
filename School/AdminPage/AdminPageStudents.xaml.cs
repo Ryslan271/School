@@ -42,10 +42,8 @@ namespace School.AdminPage
 
         public AdminPageStudents()
         {
-            DBConnect.db.Student.Load();
             Students = DBConnect.db.Student.Local;
 
-            DBConnect.db.Class.Load();
             _class = DBConnect.db.Class.Local;
 
             InitializeComponent();
