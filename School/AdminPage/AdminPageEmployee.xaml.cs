@@ -35,7 +35,6 @@ namespace School.AdminPage
 
         public AdminPageEmployee()
         {
-            DBConnect.db.Employee.Load();
             Employees = DBConnect.db.Employee.Local;
 
             InitializeComponent();

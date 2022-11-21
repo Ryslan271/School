@@ -34,7 +34,6 @@ namespace School.AdminPage
             DependencyProperty.Register("Lessons", typeof(ObservableCollection<Lesson>), typeof(AdminPageLesson));
         public AdminPageLesson()
         {
-            DBConnect.db.Lesson.Load();
             Lessons = DBConnect.db.Lesson.Local;
             
             InitializeComponent();

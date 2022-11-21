@@ -35,7 +35,6 @@ namespace School.AdminPage
 
         public AdminPageClass()
         {
-            DBConnect.db.Class.Load();
             Classes = DBConnect.db.Class.Local;
 
             InitializeComponent();

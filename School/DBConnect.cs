@@ -20,6 +20,7 @@ namespace School
             db.Employee.Load();
             db.Lesson.Load();
             db.LessonEmployee.Load();
+            db.Schedule.Load();
         }
     }
 }

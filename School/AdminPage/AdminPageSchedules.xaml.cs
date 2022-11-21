@@ -49,20 +49,15 @@ namespace School.AdminPage
 
         public AdminPageSchedules()
         {
-            DBConnect.db.Schedule.Load();
             Schedules = DBConnect.db.Schedule.Local;
 
-            DBConnect.db.Employee.Load();
             _employees = DBConnect.db.Employee.Local;
 
-            DBConnect.db.LessonEmployee.Load();
             _lessonEmployee = DBConnect.db.LessonEmployee.Local;
 
             _lesson = DBConnect.db.Lesson.Local;
 
             InitializeComponent();
-
-            DBConnect.db.Configuration.AutoDetectChangesEnabled = true;
         }
 
         #region Сохранение 
