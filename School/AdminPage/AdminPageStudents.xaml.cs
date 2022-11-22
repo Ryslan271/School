@@ -58,6 +58,9 @@ namespace School.AdminPage
                     Administrator.TimerMessageInfo();
                     return false;
                 }
+                student.Surname.Trim();
+                student.Name.Trim();
+                student.Lastname.Trim();
                 return true;
             });
 

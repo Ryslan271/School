@@ -41,9 +41,9 @@ namespace School.AdminPage
 
         public AdminPageStudentLesson()
         {
-            Lessons = DBConnect.db.Lesson.Local;
+            Lessons = new ObservableCollection<Lesson> (DBConnect.db.Lesson.Local.Where(x => x.Active == true));
 
-            Students = DBConnect.db.Student.Local;
+            Students = new ObservableCollection<Student> (DBConnect.db.Student.Local.Where(x => x.Activ == true));
 
             StudentLessons = new ObservableCollection<StudentLesson> 
                 (DBConnect.db.StudentLesson.Local.Where(x => x.Student.Activ == true && x.Lesson.Active == true));

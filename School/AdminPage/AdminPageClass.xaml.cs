@@ -48,6 +48,7 @@ namespace School.AdminPage
                     Administrator.TimerMessageInfo();
                     return false;
                 }
+                classs.Name.Trim();
                 return true;
             });
 

@@ -40,9 +40,9 @@ namespace School.AdminPage
 
         public AdminPageLessonEmployees()
         {
-            Employees = DBConnect.db.Employee.Local;
+            Employees = new ObservableCollection<Employee> (DBConnect.db.Employee.Local.Where(x => x.Activ == true));
 
-            _lessons = DBConnect.db.Lesson.Local;
+            _lessons = new ObservableCollection<Lesson>(DBConnect.db.Lesson.Local.Where(x => x.Active == true));
 
             LessonEmployees = new ObservableCollection<LessonEmployee> 
                 (DBConnect.db.LessonEmployee.Local.Where(x => x.Lesson.Active == true && x.Employee.Activ == true));

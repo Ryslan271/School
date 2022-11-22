@@ -17,7 +17,6 @@
         <TextBlock Text="Классы"/>
         <DataGrid Grid.Row="1" CanUserAddRows="False" AutoGenerateColumns="False" ItemsSource="{Binding Classes}" x:Name="DataGridClasses">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="2*" Header="Id" Binding="{Binding Path=id}"/>
                 <DataGridTextColumn Width="2*" Header="Номер класса" Binding="{Binding StringFormat='{}{0}', Path=Name}"/>
                 <DataGridCheckBoxColumn Width="2*" Header="Номер класса" Binding="{Binding StringFormat='{}{0}', Path=Activ}"/>
             </DataGrid.Columns>
