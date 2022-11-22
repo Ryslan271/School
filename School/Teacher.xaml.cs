@@ -14,6 +14,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -24,7 +25,7 @@ namespace School
     /// Логика взаимодействия для Teacher.xaml
     /// </summary>
 
-    public partial class Teacher : Window
+    public partial class Teacher : Window, INotifyPropertyChanged 
     {
 
         //Ссылки на объекты бд
@@ -69,6 +70,43 @@ namespace School
                 if (_checkMissLesson == value) return;
 
                 _checkMissLesson = value;
+            }
+        }
+
+        private Brush _brush1;
+        private Brush _brush2;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyName)
+        {
+            if (this.PropertyChanged != null)
+            {
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+        public Brush Brush1
+        {
+            get
+            {
+                return _brush1;
+            }
+            set
+            {
+                _brush1 = value;
+                this.OnPropertyChanged("colorOne");
+            }
+        }
+
+        public Brush Brush2
+        {
+            get
+            {
+                return _brush2;
+            }
+            set
+            {
+                _brush2 = value;
+                this.OnPropertyChanged("colorTwo");
             }
         }
         public Teacher()
@@ -251,6 +289,19 @@ namespace School
             presenceList.Add(checkBox.Content.ToString(), (bool)checkBox.IsChecked);
         }
 
-        private void Image_MouseUp_1(object sender, MouseButtonEventArgs e) => ThemeChange.Change();
+        private void Image_MouseUp_1(object sender, MouseButtonEventArgs e)
+        {
+            if (ThemeChange.position)
+            {
+                _brush1 = new SolidColorBrush( Color.FromRgb(64, 64, 64));
+                _brush2 = new SolidColorBrush(Color.FromRgb(55, 55, 55));
+            }
+            else
+            {
+                _brush1 = new SolidColorBrush(Color.FromRgb(226, 226, 226));
+                _brush2 = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+            }
+            ThemeChange.Change();
+        }
     }
 }

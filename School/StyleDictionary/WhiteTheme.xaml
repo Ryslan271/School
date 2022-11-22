@@ -27,6 +27,14 @@
         <Setter Property="Foreground" Value="#FF2B2B2B"/>
     </Style>
 
+    <Style TargetType="CheckBox">
+        <Setter Property="Foreground" Value="#FFA78F8F"/>
+    </Style>
+
+    <Style TargetType="ComboBoxItem">
+        <Setter Property="Background" Value="#FFE2E2E2"/>
+    </Style>
+    
     <Style TargetType="DataGrid">
         <Setter Property="Background" Value="White"/>
         <Setter Property="Foreground" Value="#FF2B2B2B"/>
@@ -46,7 +54,8 @@
 
     </Style>
     <Style TargetType="Button" x:Key="ButtonNotInAdmin">
-        <Setter Property="Background" Value="White"/>
+        <Setter Property="Background" Value="#FF404040"/>
+        <Setter Property="Foreground" Value="White"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -61,9 +70,14 @@
         </Setter>
         <Setter Property="Effect">
             <Setter.Value>
-                <DropShadowEffect Color="Black" Direction="310" ShadowDepth="5" Opacity="0.3"/>
+                <DropShadowEffect Color="#FF505050" Direction="310" ShadowDepth="5" Opacity="0.3"/>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#FF636363"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style TargetType="Button" x:Key="ButtomInAdmin">
