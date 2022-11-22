@@ -6,6 +6,26 @@
         xmlns:local="clr-namespace:School"
         mc:Ignorable="d"
         Title="StudentWindow" Height="450" Width="800" Closed="Window_Closed">
+
+    <Window.Resources>
+        <Style TargetType="ListBoxItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border x:Name="border">
+                            <ContentPresenter></ContentPresenter>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="border"  Property="Background" Value="Transparent"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Grid Style="{DynamicResource StyleGrid}">
         <Grid.RowDefinitions>
             <RowDefinition Height="208*"/>

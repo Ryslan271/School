@@ -1,4 +1,4 @@
-using School.ListWindow;
+//using School.ListWindow;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -56,6 +56,21 @@ namespace School
                 _Presence = value;
             }
         }
+
+        private bool _checkMissLesson;
+        public bool checkMissLesson
+        {
+            get
+            {
+                return _checkMissLesson;
+            }
+            set
+            {
+                if (_checkMissLesson == value) return;
+
+                _checkMissLesson = value;
+            }
+        }
         public Teacher()
         {
             InitializeComponent();
@@ -66,7 +81,7 @@ namespace School
                               where lessonEmployee.IdEmployees == IdUSer.Id
                               select new
                               {
-                                  nameLesson = less.Name.ToString() + " " + schedule.DataTimeStart.ToString() + " " + schedule.DataTimeFinich.ToString()
+                                  nameLesson = less.Name.ToString() + " " + schedule.DataTimeStart.ToString().Substring(0, 5) + " " + schedule.DataTimeFinich.ToString().Substring(0, 5)
                               }).Distinct();
             foreach(var entity in queryLesson)
                 selectLessen.Items.Add(entity.nameLesson);
@@ -189,11 +204,27 @@ namespace School
             }
             else
             {
-                infoMessage.Text = "За " + DateTime.Today.ToString("d") + " не отмечены ученики по предметам: \n";
-                foreach (var entity in selectLessen.Items)
-                    if(missingLessonList.Exists(m => m == entity.ToString()))
-                        infoMessage.Text += entity + ", ";
+                checkMissLesson = true;
+                infoMessage.MouseUp += InfoMessage_MouseUp;
+                infoMessage.Text = "Нажмите чтобы посмотреть по каким предметам\nне отмечены ученики";
                 infoMessage.Foreground = Brushes.Red;
+            }
+        }
+
+        private void InfoMessage_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (checkMissLesson)
+            {
+                ArrayList str = new ArrayList();
+                str.Add("За " + DateTime.Today.ToString("d") + " не отмечены ученики по предметам: \n");
+                foreach (var entity in selectLessen.Items)
+                    if (missingLessonList.Exists(m => m == entity.ToString().Split(' ').FirstOrDefault()))
+                        str.Add("● " + entity);
+                InfoMessageBox info = new InfoMessageBox(str);
+                if (!InfoMessageBox.condition)
+                    info.Show();
+                else
+                    info.Close();
             }
         }
 
@@ -202,15 +233,15 @@ namespace School
 
         private void addStudent_Click(object sender, RoutedEventArgs e)
         {
-            if(!AddStudents.AddStudentLoad)
-                new AddStudents().Show();
+            if(!ListWindow.AddStudents.AddStudentLoad)
+                new ListWindow.AddStudents().Show();
         }
 
         
         private void deleteStudent_Click(object sender, RoutedEventArgs e)
         {
-            if(!DeleteStudents.deleteStudentsLoad)
-                new DeleteStudents().Show();
+            if(!ListWindow.DeleteStudents.deleteStudentsLoad)
+                new ListWindow.DeleteStudents().Show();
         }
 
         private void CheckBox_Click(object sender, RoutedEventArgs e)

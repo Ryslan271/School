@@ -54,9 +54,9 @@ namespace School
 
             foreach (var entity in (DBConnect.db.Student.SelectMany(c => c.VisitLeson).Where(c => c.Lesson.Name == lessons && c.Student.id == IdUSer.Id)))
                 if (entity.Presence)
-                    ListVisit.Items.Add("Посетил занятия " + entity.DateVisitLessons);
+                    ListVisit.Items.Add("Посетил занятия " + entity.DateVisitLessons.ToString().Substring(0,10) + " c " + entity.TimeStart + " до " + entity.TimeFinish);
                 else
-                    ListVisit.Items.Add("Пропустил занятия " + entity.DateVisitLessons);
+                    ListVisit.Items.Add("Пропустил занятия " + entity.DateVisitLessons.ToString().Substring(0, 10) + " c " + entity.TimeStart + " до " + entity.TimeFinish);
         }
         //Отображение информации об учителе
         private void ListEmployee_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -70,11 +70,15 @@ namespace School
                 lastname = item.ToString().Split(' ').Last();
                 fullname = item.ToString();
             }
-            var nameP = "\n";
+            ArrayList nameP = new ArrayList();
+            nameP.Add("Преподаватель " + fullname + " ведет предметы: \n");
             foreach (var entity in DBConnect.db.Employee.Where(employee => employee.Name == name && employee.Lastname == lastname).SelectMany(l => l.LessonEmployee.Select(less => less.Lesson)))
-                nameP += entity.Name + "\n";
-            InfoMessageBox infoMessageBox = new InfoMessageBox("Преподаватель " + fullname + " ведет предметы " + nameP);
-            infoMessageBox.Show();
+                nameP.Add("● " + entity.Name);
+            InfoMessageBox infoMessageBox = new InfoMessageBox(nameP);
+            if (!InfoMessageBox.condition)
+                infoMessageBox.Show();
+            else
+                infoMessageBox.Close();
         }
         //Открытие окна авторизации
         private void Window_Closed(object sender, EventArgs e) => new MainWindow().Show();
