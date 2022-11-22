@@ -26,7 +26,6 @@ namespace School.AdminPage
     {
         private ObservableCollection<Employee> _employees;
         private ObservableCollection<Lesson> _lesson;
-        private ObservableCollection<LessonEmployee> _lessonEmployee;
 
         public ObservableCollection<Employee> Employees
         {
@@ -53,8 +52,6 @@ namespace School.AdminPage
             Schedules = DBConnect.db.Schedule.Local;
 
             _employees = DBConnect.db.Employee.Local;
-
-            _lessonEmployee = DBConnect.db.LessonEmployee.Local;
 
             _lesson = DBConnect.db.Lesson.Local;
 

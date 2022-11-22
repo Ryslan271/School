@@ -1,24 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity.Validation;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace School
 {
     /// <summary>
-    /// Логика взаимодействия для Administrator.xaml
+    /// Логика взаимодействия для Паненли администратора
     /// </summary>
     public partial class Administrator : Window
     {
@@ -30,6 +19,7 @@ namespace School
             Instance = this;
         }
 
+        #region Кнопки для перехода по страничкам
         private void Window_Closed(object sender, EventArgs e) => new MainWindow().Show();
         private void ButtonClickEmployee(object sender, RoutedEventArgs e) => PageAdmin.Navigate(new AdminPage.AdminPageEmployee());
         private void ButtonClickStudent(object sender, RoutedEventArgs e) => PageAdmin.Navigate(new AdminPage.AdminPageStudents());
@@ -37,6 +27,10 @@ namespace School
         private void ButtonClickClass(object sender, RoutedEventArgs e) => PageAdmin.Navigate(new AdminPage.AdminPageClass());
         private void ButtonClickLesson(object sender, RoutedEventArgs e) => PageAdmin.Navigate(new AdminPage.AdminPageLesson());
         private void ButtonClickLessonEmployee(object sender, RoutedEventArgs e) => PageAdmin.Navigate(new AdminPage.AdminPageLessonEmployees());
+        private void DuttonClickStudentLesson(object sender, RoutedEventArgs e) => PageAdmin.Navigate(new AdminPage.AdminPageStudentLesson());
+        #endregion
+
+        #region Вывод информации о сохранении
         public static bool Ask(bool flag)
         {
             if (flag == true)
@@ -44,7 +38,9 @@ namespace School
             else
                 return MessageBox.Show("Удалить выделенную(ые) записи", "Уведомление", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
         }
+        #endregion
 
+        #region Сохранение изменений в бд
         public static void SaveChangeDB()
         {
             try
@@ -57,6 +53,7 @@ namespace School
                 TimerMessageInfo();
             }
         }
+        #endregion
 
         #region Штука для вывода инфы
         public static void TimerMessageInfo()
