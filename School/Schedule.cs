@@ -19,10 +19,8 @@ namespace School
         public Nullable<int> idLessonEmloyee { get; set; }
         public Nullable<System.TimeSpan> DataTimeStart { get; set; }
         public Nullable<System.TimeSpan> DataTimeFinich { get; set; }
-        public int idWeek { get; set; }
         public bool Activ { get; set; }
     
         public virtual LessonEmployee LessonEmployee { get; set; }
-        public virtual Week Week { get; set; }
     }
 }

@@ -34,6 +34,5 @@ namespace School
         public virtual DbSet<Student> Student { get; set; }
         public virtual DbSet<StudentLesson> StudentLesson { get; set; }
         public virtual DbSet<VisitLeson> VisitLeson { get; set; }
-        public virtual DbSet<Week> Week { get; set; }
     }
 }

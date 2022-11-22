@@ -149,9 +149,6 @@
     <Compile Include="VisitLeson.cs">
       <DependentUpon>Shool1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Week.cs">
-      <DependentUpon>Shool1.tt</DependentUpon>
-    </Compile>
     <Page Include="Administrator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

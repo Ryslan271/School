@@ -296,7 +296,7 @@
           <Property Name="Active" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="LessonEmployee" Relationship="Self.FK_LessonEmployee_Lesson" FromRole="Lesson" ToRole="LessonEmployee" />
           <NavigationProperty Name="StudentLesson" Relationship="Self.FK_StudentLesson_Lesson" FromRole="Lesson" ToRole="StudentLesson" />
-          <NavigationProperty Name="VisitLeson" Relationship="Self.FK_VisitLeson_Lesson" FromRole="Lesson" ToRole="VisitLeson" />
+          <NavigationProperty Name="VisitLeson" Relationship="School1Model.FK_VisitLeson_Lesson" FromRole="Lesson" ToRole="VisitLeson" />
         </EntityType>
         <EntityType Name="LessonEmployee">
           <Key>
@@ -335,7 +335,7 @@
           <Property Name="Activ" Type="Boolean" />
           <NavigationProperty Name="Class" Relationship="Self.FK_Student_Class" FromRole="Student" ToRole="Class" />
           <NavigationProperty Name="StudentLesson" Relationship="Self.FK_StudentLesson_Student" FromRole="Student" ToRole="StudentLesson" />
-          <NavigationProperty Name="VisitLeson" Relationship="Self.FK_VisitLeson_Student" FromRole="Student" ToRole="VisitLeson" />
+          <NavigationProperty Name="VisitLeson" Relationship="School1Model.FK_VisitLeson_Student" FromRole="Student" ToRole="VisitLeson" />
         </EntityType>
         <EntityType Name="StudentLesson">
           <Key>
@@ -346,19 +346,6 @@
           <Property Name="IdStudent" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Lesson" Relationship="Self.FK_StudentLesson_Lesson" FromRole="StudentLesson" ToRole="Lesson" />
           <NavigationProperty Name="Student" Relationship="Self.FK_StudentLesson_Student" FromRole="StudentLesson" ToRole="Student" />
-        </EntityType>
-        <EntityType Name="VisitLeson">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdLesson" Type="Int32" Nullable="false" />
-          <Property Name="IdStudent" Type="Int32" Nullable="false" />
-          <Property Name="DateVisitLessons" Type="DateTime" Precision="0" />
-          <Property Name="Presence" Type="Boolean" Nullable="false" />
-          <Property Name="IdTeacher" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Lesson" Relationship="Self.FK_VisitLeson_Lesson" FromRole="VisitLeson" ToRole="Lesson" />
-          <NavigationProperty Name="Student" Relationship="Self.FK_VisitLeson_Student" FromRole="VisitLeson" ToRole="Student" />
         </EntityType>
         <Association Name="FK_Student_Class">
           <End Role="Class" Type="Self.Class" Multiplicity="1" />
@@ -420,18 +407,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_VisitLeson_Lesson">
-          <End Role="Lesson" Type="Self.Lesson" Multiplicity="1" />
-          <End Role="VisitLeson" Type="Self.VisitLeson" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Lesson">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="VisitLeson">
-              <PropertyRef Name="IdLesson" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Schedule_LessonEmployee">
           <End Role="LessonEmployee" Type="Self.LessonEmployee" Multiplicity="0..1" />
           <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
@@ -456,18 +431,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_VisitLeson_Student">
-          <End Role="Student" Type="Self.Student" Multiplicity="1" />
-          <End Role="VisitLeson" Type="Self.VisitLeson" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Student">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="VisitLeson">
-              <PropertyRef Name="IdStudent" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="School1Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Class" EntityType="Self.Class" />
           <EntitySet Name="Employee" EntityType="Self.Employee" />
@@ -477,7 +440,6 @@
           <EntitySet Name="Schedule" EntityType="Self.Schedule" />
           <EntitySet Name="Student" EntityType="Self.Student" />
           <EntitySet Name="StudentLesson" EntityType="Self.StudentLesson" />
-          <EntitySet Name="VisitLeson" EntityType="Self.VisitLeson" />
           <AssociationSet Name="FK_Student_Class" Association="Self.FK_Student_Class">
             <End Role="Class" EntitySet="Class" />
             <End Role="Student" EntitySet="Student" />
@@ -498,10 +460,6 @@
             <End Role="Lesson" EntitySet="Lesson" />
             <End Role="StudentLesson" EntitySet="StudentLesson" />
           </AssociationSet>
-          <AssociationSet Name="FK_VisitLeson_Lesson" Association="Self.FK_VisitLeson_Lesson">
-            <End Role="Lesson" EntitySet="Lesson" />
-            <End Role="VisitLeson" EntitySet="VisitLeson" />
-          </AssociationSet>
           <AssociationSet Name="FK_Schedule_LessonEmployee" Association="Self.FK_Schedule_LessonEmployee">
             <End Role="LessonEmployee" EntitySet="LessonEmployee" />
             <End Role="Schedule" EntitySet="Schedule" />
@@ -510,11 +468,55 @@
             <End Role="Student" EntitySet="Student" />
             <End Role="StudentLesson" EntitySet="StudentLesson" />
           </AssociationSet>
-          <AssociationSet Name="FK_VisitLeson_Student" Association="Self.FK_VisitLeson_Student">
+          <EntitySet Name="VisitLeson" EntityType="School1Model.VisitLeson" />
+          <AssociationSet Name="FK_VisitLeson_Lesson" Association="School1Model.FK_VisitLeson_Lesson">
+            <End Role="Lesson" EntitySet="Lesson" />
+            <End Role="VisitLeson" EntitySet="VisitLeson" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitLeson_Student" Association="School1Model.FK_VisitLeson_Student">
             <End Role="Student" EntitySet="Student" />
             <End Role="VisitLeson" EntitySet="VisitLeson" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="VisitLeson">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdLesson" Type="Int32" Nullable="false" />
+          <Property Name="IdStudent" Type="Int32" Nullable="false" />
+          <Property Name="DateVisitLessons" Type="DateTime" Precision="0" />
+          <Property Name="Presence" Type="Boolean" Nullable="false" />
+          <Property Name="IdTeacher" Type="Int32" Nullable="false" />
+          <Property Name="TimeStart" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TimeFinish" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Lesson" Relationship="School1Model.FK_VisitLeson_Lesson" FromRole="VisitLeson" ToRole="Lesson" />
+          <NavigationProperty Name="Student" Relationship="School1Model.FK_VisitLeson_Student" FromRole="VisitLeson" ToRole="Student" />
+        </EntityType>
+        <Association Name="FK_VisitLeson_Lesson">
+          <End Type="School1Model.Lesson" Role="Lesson" Multiplicity="1" />
+          <End Type="School1Model.VisitLeson" Role="VisitLeson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lesson">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="VisitLeson">
+              <PropertyRef Name="IdLesson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitLeson_Student">
+          <End Type="School1Model.Student" Role="Student" Multiplicity="1" />
+          <End Type="School1Model.VisitLeson" Role="VisitLeson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="VisitLeson">
+              <PropertyRef Name="IdStudent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -609,12 +611,14 @@
           <EntitySetMapping Name="VisitLeson">
             <EntityTypeMapping TypeName="School1Model.VisitLeson">
               <MappingFragment StoreEntitySet="VisitLeson">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="IdLesson" ColumnName="IdLesson" />
-                <ScalarProperty Name="IdStudent" ColumnName="IdStudent" />
-                <ScalarProperty Name="DateVisitLessons" ColumnName="DateVisitLessons" />
-                <ScalarProperty Name="Presence" ColumnName="Presence" />
+                <ScalarProperty Name="TimeFinish" ColumnName="TimeFinish" />
+                <ScalarProperty Name="TimeStart" ColumnName="TimeStart" />
                 <ScalarProperty Name="IdTeacher" ColumnName="IdTeacher" />
+                <ScalarProperty Name="Presence" ColumnName="Presence" />
+                <ScalarProperty Name="DateVisitLessons" ColumnName="DateVisitLessons" />
+                <ScalarProperty Name="IdStudent" ColumnName="IdStudent" />
+                <ScalarProperty Name="IdLesson" ColumnName="IdLesson" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
