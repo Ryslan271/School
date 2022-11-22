@@ -1,21 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace School.AdminPage
 {
@@ -27,6 +16,7 @@ namespace School.AdminPage
         private ObservableCollection<Employee> _employees;
         private ObservableCollection<Lesson> _lesson;
 
+        #region Связка с окном
         public ObservableCollection<Employee> Employees
         {
             get { return _employees; }
@@ -45,7 +35,7 @@ namespace School.AdminPage
 
         public static readonly DependencyProperty SchedulesProperty =
             DependencyProperty.Register("Schedules", typeof(ObservableCollection<Schedule>), typeof(AdminPageSchedules));
-
+        #endregion
 
         public AdminPageSchedules()
         {
@@ -153,6 +143,7 @@ namespace School.AdminPage
         }
         #endregion
 
+        #region Работа с TimeSpam колонки времени
         private void DataGridSchedule_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             if (!(e.Column.Header.ToString() == "Начало урока") || !(e.EditingElement is TextBox editingElement))
@@ -166,5 +157,6 @@ namespace School.AdminPage
             else
                 editingElement.Text = null;
         }
+        #endregion
     }
 }

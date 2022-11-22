@@ -1,20 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace School.AdminPage
 {
@@ -23,15 +10,16 @@ namespace School.AdminPage
     /// </summary>
     public partial class AdminPageClass : Page
     {
-        public ObservableCollection<Class> Classes // вместо студента лесон
+        #region Связка с окном
+        public ObservableCollection<Class> Classes
         {
             get { return (ObservableCollection<Class>)GetValue(ClassesProperty); }
             set { SetValue(ClassesProperty, value); }
         }
-
-        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+.
         public static readonly DependencyProperty ClassesProperty =
             DependencyProperty.Register("Classes", typeof(ObservableCollection<Class>), typeof(AdminPageClass));
+        #endregion
 
         public AdminPageClass()
         {

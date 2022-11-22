@@ -10,15 +10,16 @@ namespace School.AdminPage
     /// </summary>
     public partial class AdminPageEmployee : Page
     {
+        #region Связка с окном
         public ObservableCollection<Employee> Employees
         {
             get { return (ObservableCollection<Employee>)GetValue(EmployeesProperty); }
             set { SetValue(EmployeesProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for Employees.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty EmployeesProperty =
             DependencyProperty.Register("Employees", typeof(ObservableCollection<Employee>), typeof(AdminPageEmployee));
+        #endregion
 
         public AdminPageEmployee()
         {

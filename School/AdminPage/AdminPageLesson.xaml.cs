@@ -10,7 +10,8 @@ namespace School.AdminPage
     /// </summary>
     public partial class AdminPageLesson : Page
     {
-        public ObservableCollection<Lesson> Lessons 
+        #region Связка с окном
+        public ObservableCollection<Lesson> Lessons
         {
             get { return (ObservableCollection<Lesson>)GetValue(LessonsProperty); }
             set { SetValue(LessonsProperty, value); }
@@ -18,6 +19,8 @@ namespace School.AdminPage
 
         public static readonly DependencyProperty LessonsProperty =
             DependencyProperty.Register("Lessons", typeof(ObservableCollection<Lesson>), typeof(AdminPageLesson));
+        #endregion
+
         public AdminPageLesson()
         {
             Lessons = DBConnect.db.Lesson.Local;

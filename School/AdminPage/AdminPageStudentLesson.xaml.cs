@@ -1,19 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace School.AdminPage
 {
@@ -22,6 +10,7 @@ namespace School.AdminPage
     /// </summary>
     public partial class AdminPageStudentLesson : Page
     {
+        #region Связка с окном
         public ObservableCollection<Lesson> Lessons
         {
             get { return (ObservableCollection<Lesson>)GetValue(LessonsProperty); }
@@ -48,7 +37,7 @@ namespace School.AdminPage
 
         public static readonly DependencyProperty StudentLessonsProperty =
             DependencyProperty.Register("StudentLessons", typeof(ObservableCollection<StudentLesson>), typeof(AdminPageStudentLesson));
-
+        #endregion
 
         public AdminPageStudentLesson()
         {
@@ -95,7 +84,7 @@ namespace School.AdminPage
         #endregion
 
         private bool EntityValidator(StudentLesson studentLesson) =>
-            StudentLessons.Count( x => studentLesson.IdStudent == x.IdStudent &&
+            StudentLessons.Count(x => studentLesson.IdStudent == x.IdStudent &&
                                        studentLesson.IdLesson == x.IdLesson) == 1;
 
         #region Добавление новой строки в DataGrid
@@ -122,7 +111,8 @@ namespace School.AdminPage
             foreach (StudentLesson item in DataGridStudentLesson.SelectedItems)
                 studentLesson.Add(item);
 
-            if (IfDelete(studentLesson)) {
+            if (IfDelete(studentLesson))
+            {
                 Administrator.SaveChangeDB();
 
                 Administrator.MessageInfoStart(true);

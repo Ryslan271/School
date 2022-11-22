@@ -1,18 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace School.AdminPage
 {
@@ -23,13 +12,13 @@ namespace School.AdminPage
     {
         private ObservableCollection<Lesson> _lessons;
 
+        #region Связка с окном
         public ObservableCollection<Employee> Employees
         {
             get { return (ObservableCollection<Employee>)GetValue(EmployeesProperty); }
             set { SetValue(EmployeesProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for Employees.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty EmployeesProperty =
             DependencyProperty.Register("Employees", typeof(ObservableCollection<Employee>), typeof(AdminPageLessonEmployees));
 
@@ -47,7 +36,7 @@ namespace School.AdminPage
 
         public static readonly DependencyProperty LessonEmployeesProperty =
             DependencyProperty.Register("LessonEmployees", typeof(ObservableCollection<LessonEmployee>), typeof(AdminPageLessonEmployees));
-
+        #endregion
 
         public AdminPageLessonEmployees()
         {
