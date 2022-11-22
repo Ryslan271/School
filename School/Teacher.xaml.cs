@@ -33,6 +33,7 @@ namespace School
         IEnumerable<VisitLeson> visit = DBConnect.db.VisitLeson;
         IEnumerable<StudentLesson> studentLesson = DBConnect.db.StudentLesson;
         IEnumerable<LessonEmployee> lessonEmployees = DBConnect.db.LessonEmployee;
+        IEnumerable<Schedule> schedules = DBConnect.db.Schedule;
 
         //Словарик для сохранения объектов listbox'a
         public static Dictionary<string, bool> presenceList = new Dictionary<string, bool>();
@@ -57,11 +58,18 @@ namespace School
         }
         public Teacher()
         {
-            IdUSer.Id = 1;
             InitializeComponent();
             //Добавление предметов в ComboBox
-            foreach (var entity in DBConnect.db.Employee.Where(employee => employee.id == IdUSer.Id).SelectMany(l => l.LessonEmployee.Select(less => less.Lesson)).Distinct())
-                selectLessen.Items.Add(entity.Name.ToString());
+            var queryLesson = (from less in lesson
+                              from lessonEmployee in less.LessonEmployee
+                              from schedule in lessonEmployee.Schedule
+                              where lessonEmployee.IdEmployees == IdUSer.Id
+                              select new
+                              {
+                                  nameLesson = less.Name.ToString() + " " + schedule.DataTimeStart.ToString() + " " + schedule.DataTimeFinich.ToString()
+                              }).Distinct();
+            foreach(var entity in queryLesson)
+                selectLessen.Items.Add(entity.nameLesson);
 
             //Добавление сегоднящней даты
             titleList.Text += DateTime.Today.ToString("d");
@@ -94,22 +102,24 @@ namespace School
             }
 
             //Удаление записей бд
-            if (visit.Where(v => (v.DateVisitLessons == DateTime.Today) && (v.IdTeacher == IdUSer.Id) && (v.IdLesson == lesson.Where(l => l.Name == selectLessen.Text).First().id)).Select(v => v).Count() > 0)
+            if (visit.Where(v => (v.DateVisitLessons == DateTime.Today) && (v.IdTeacher == IdUSer.Id) && (v.IdLesson == lesson.Where(l => l.Name == selectLessen.SelectedItem.ToString().Split(' ').FirstOrDefault()).First().id)).Count() > 0)
             {
-                foreach (var entity in visit.Where(v => (v.DateVisitLessons == DateTime.Today) && (v.IdTeacher == IdUSer.Id) && (v.IdLesson == lesson.Where(l => l.Name == selectLessen.Text).First().id)).Select(v => v))
+                foreach (var entity in visit.Where(v => (v.DateVisitLessons == DateTime.Today) && (v.IdTeacher == IdUSer.Id) && (v.IdLesson == lesson.Where(l => l.Name == selectLessen.SelectedItem.ToString().Split(' ').FirstOrDefault()).First().id)).Select(v => v))
                 {
                     DBConnect.db.VisitLeson.Remove(entity);
                 }
             }
-
+           
             //Запись в бд
             foreach (var entity in presenceList)
             {
                 VisitLeson visitLesson = new VisitLeson
                 {
                     IdTeacher = IdUSer.Id,
-                    IdLesson = lesson.Where(l => l.Name == selectLessen.Text).First().id,
+                    IdLesson = lesson.Where(l => l.Name == selectLessen.SelectedItem.ToString().Split(' ').FirstOrDefault()).First().id,
                     IdStudent = students.Where(s => s.Name == entity.Key.Split(' ').FirstOrDefault() && s.Lastname == entity.Key.Split(' ').LastOrDefault()).Select(s => s.id).First(),
+                    TimeStart = selectLessen.SelectedItem.ToString().Split(' ').ElementAt(1).Substring(0, 5),
+                    TimeFinish = selectLessen.SelectedItem.ToString().Split(' ').LastOrDefault().Substring(0, 5),
                     DateVisitLessons = DateTime.Today,
                     Presence = entity.Value
                 };
@@ -118,7 +128,7 @@ namespace School
             }
             DBConnect.db.SaveChanges();
             infoMessage.Foreground = Brushes.Green;
-            infoMessage.Text = "Данные сохранены для предмета: " + (lesson.Where(l => l.Name == selectLessen.Text).First().Name);
+            infoMessage.Text = "Данные сохранены для предмета: " + (lesson.Where(l => l.Name == selectLessen.SelectedItem.ToString().Split(' ').FirstOrDefault()).First().Name);
         }
         //Отображение учеников в ListBox
         private void selectLessen_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -133,15 +143,15 @@ namespace School
                                 from student in students
                                 from lessonStudent in student.StudentLesson
                                 where lessonStudent.IdLesson == (from less in lesson
-                                                                 where less.Name == selectLessen.SelectedItem.ToString()
-                                                                 select less).First().id
+                                                                 where less.Name == selectLessen.SelectedItem.ToString().Split(' ').FirstOrDefault()
+                                                                 select less).FirstOrDefault().id
                                 select new
                                 {
                                     id = student.id,
                                     fullName = student.Name + " " + student.Surname + " " + student.Lastname,
                                     Presence = Presence
                                 }).Distinct();
-            if(queryStudent.Select(q => q).FirstOrDefault() == null)
+            if (queryStudent.Select(q => q).FirstOrDefault() == null)
             {
                 infoMessageStudent.Text = "У вас нет учеников по этому предмету";
                 return;

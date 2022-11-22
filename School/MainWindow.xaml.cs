@@ -18,6 +18,7 @@ using System.Data.SqlClient;
 using System.Security.Cryptography.X509Certificates;
 using School.Properties;
 using System.Security.Policy;
+using System.Windows.Threading;
 
 namespace School
 {
@@ -34,7 +35,6 @@ namespace School
 
             InitializeComponent();
         }
-
         private void BtnInput_Click(object sender, RoutedEventArgs e)
         {
             if (LoginTextBox.Text != "" && PasswordBox.Password != "")

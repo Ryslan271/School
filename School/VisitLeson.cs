@@ -20,6 +20,8 @@ namespace School
         public Nullable<System.DateTime> DateVisitLessons { get; set; }
         public bool Presence { get; set; }
         public int IdTeacher { get; set; }
+        public string TimeStart { get; set; }
+        public string TimeFinish { get; set; }
     
         public virtual Lesson Lesson { get; set; }
         public virtual Student Student { get; set; }

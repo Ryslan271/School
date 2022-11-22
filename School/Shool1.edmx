@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище School1Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище School1Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Class">
           <Key>
             <PropertyRef Name="id" />
@@ -93,6 +93,8 @@
           <Property Name="DateVisitLessons" Type="date" />
           <Property Name="Presence" Type="bit" Nullable="false" />
           <Property Name="IdTeacher" Type="int" Nullable="false" />
+          <Property Name="TimeStart" Type="nvarchar" MaxLength="50" />
+          <Property Name="TimeFinish" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Week">
           <Key>
@@ -273,8 +275,7 @@
             <End Role="VisitLeson" EntitySet="VisitLeson" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="School1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -385,6 +386,8 @@
           <Property Name="IdTeacher" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Lesson" Relationship="Self.FK_VisitLeson_Lesson" FromRole="VisitLeson" ToRole="Lesson" />
           <NavigationProperty Name="Student" Relationship="Self.FK_VisitLeson_Student" FromRole="VisitLeson" ToRole="Student" />
+          <Property Name="TimeStart" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TimeFinish" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Week">
           <Key>
@@ -661,6 +664,8 @@
           <EntitySetMapping Name="VisitLeson">
             <EntityTypeMapping TypeName="School1Model.VisitLeson">
               <MappingFragment StoreEntitySet="VisitLeson">
+                <ScalarProperty Name="TimeFinish" ColumnName="TimeFinish" />
+                <ScalarProperty Name="TimeStart" ColumnName="TimeStart" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="IdLesson" ColumnName="IdLesson" />
                 <ScalarProperty Name="IdStudent" ColumnName="IdStudent" />
