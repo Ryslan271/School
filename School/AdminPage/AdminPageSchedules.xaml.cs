@@ -1,10 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
 namespace School.AdminPage
 {
@@ -39,11 +50,12 @@ namespace School.AdminPage
 
         public AdminPageSchedules()
         {
-            Schedules = DBConnect.db.Schedule.Local;
+            Schedules = new ObservableCollection<Schedule> 
+                (DBConnect.db.Schedule.Local.Where(x => x.LessonEmployee.Employee.Activ == true && x.LessonEmployee.Lesson.Active == true));
 
-            _employees = DBConnect.db.Employee.Local;
+            _employees = new ObservableCollection<Employee> (DBConnect.db.Employee.Local.Where(x => x.Activ == true));
 
-            _lesson = DBConnect.db.Lesson.Local;
+            _lesson = new ObservableCollection<Lesson> (DBConnect.db.Lesson.Local.Where(x => x.Active == true));
 
             InitializeComponent();
         }
@@ -61,6 +73,12 @@ namespace School.AdminPage
             {
                 if (!(entry.Entity is Schedule schedule))
                     return true;
+
+                if (schedule.LessonEmployee.Employee.Activ == false || schedule.LessonEmployee.Lesson.Active == false)
+                    schedule.Activ = false;
+
+                else if (schedule.LessonEmployee.Employee.Activ == true && schedule.LessonEmployee.Lesson.Active == true)
+                    schedule.Activ = true;
 
                 if (EntityValidator(schedule) == false)
                 {
@@ -84,15 +102,12 @@ namespace School.AdminPage
         }
         #endregion
 
-        private bool EntityValidator(Schedule schedule) => Schedules.Count(
-                                                            x => x.DataTimeStart == schedule.DataTimeStart &&
-                                                            x.id == schedule.id &&
-                                                            x.NumberCabinet == schedule.NumberCabinet &&
-                                                            schedule.idLessonEmloyee == x.idLessonEmloyee) == 1 &&
+        private bool EntityValidator(Schedule schedule) =>  Schedules.Count(x => (x.DataTimeStart < schedule.DataTimeStart ||
+                                                            x.DataTimeStart > schedule.DataTimeStart + new TimeSpan(0, 45, 0)) &&
+                                                            x.NumberCabinet == schedule.NumberCabinet && 
+                                                            x.idLessonEmloyee == schedule.idLessonEmloyee) == 1 &&
                                                             schedule.NumberCabinet != null &&
-                                                            schedule.DataTimeStart != null &&
-                                                            Schedules.Where(x => x.DataTimeStart < schedule.DataTimeStart ||
-                                                            x.DataTimeStart > schedule.DataTimeStart + new TimeSpan(0, 45, 0)).Count() == 1;
+                                                            schedule.DataTimeStart != null;
 
         #region Добавление новой строки в DataGrid
         private void ButtomAddClick(object sender, RoutedEventArgs e)

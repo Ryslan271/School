@@ -33,7 +33,7 @@ namespace School.AdminPage
         {
             Students = DBConnect.db.Student.Local;
 
-            _class = DBConnect.db.Class.Local;
+            _class = new ObservableCollection<Class> (DBConnect.db.Class.Local.Where(x => x.Activ == true));
 
             InitializeComponent();
         }

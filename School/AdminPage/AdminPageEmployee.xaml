@@ -15,7 +15,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <TextBlock Text="Учителя"/>
-        <DataGrid Grid.Row="1" ItemsSource="{Binding Employees}" CanUserAddRows="False" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto" x:Name="DataGridEmployee">
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Employees}" ScrollViewer.VerticalScrollBarVisibility="Visible" CanUserAddRows="False" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto" x:Name="DataGridEmployee">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="2*" Header="Фамилия" Binding="{Binding Path=Surname}"/>
                 <DataGridTextColumn Width="2*" Header="Имя" Binding="{Binding StringFormat='{}{0}', Path=Name}"/>

@@ -45,7 +45,8 @@ namespace School.AdminPage
 
             Students = DBConnect.db.Student.Local;
 
-            StudentLessons = DBConnect.db.StudentLesson.Local;
+            StudentLessons = new ObservableCollection<StudentLesson> 
+                (DBConnect.db.StudentLesson.Local.Where(x => x.Student.Activ == true && x.Lesson.Active == true));
 
             InitializeComponent();
         }
@@ -111,31 +112,21 @@ namespace School.AdminPage
             foreach (StudentLesson item in DataGridStudentLesson.SelectedItems)
                 studentLesson.Add(item);
 
-            if (IfDelete(studentLesson))
-            {
-                Administrator.SaveChangeDB();
-
-                Administrator.MessageInfoStart(true);
-                Administrator.TimerMessageInfo();
-            }
-
-            DataGridStudentLesson.Items.Refresh();
-        }
-
-        private bool IfDelete(ObservableCollection<StudentLesson> studentLesson)
-        {
-            bool f = true;
-
             foreach (StudentLesson item in studentLesson)
             {
                 if (!(item.IdLesson.ToString() != "" && item.IdStudent.ToString() != "" &&
-                    item.IdLesson.ToString() != null && item.IdStudent.ToString() != null))
+                    item.IdLesson != null && item.IdStudent != null))
                     continue;
 
                 StudentLessons.Remove(item);
-                f = false;
             }
-            return f;
+
+            Administrator.SaveChangeDB();
+
+            Administrator.MessageInfoStart(true);
+            Administrator.TimerMessageInfo();
+
+            DataGridStudentLesson.Items.Refresh();
         }
         #endregion
     }

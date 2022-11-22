@@ -44,7 +44,8 @@ namespace School.AdminPage
 
             _lessons = DBConnect.db.Lesson.Local;
 
-            LessonEmployees = DBConnect.db.LessonEmployee.Local;
+            LessonEmployees = new ObservableCollection<LessonEmployee> 
+                (DBConnect.db.LessonEmployee.Local.Where(x => x.Lesson.Active == true && x.Employee.Activ == true));
 
             InitializeComponent();
         }

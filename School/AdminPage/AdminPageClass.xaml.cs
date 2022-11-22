@@ -16,7 +16,7 @@ namespace School.AdminPage
             get { return (ObservableCollection<Class>)GetValue(ClassesProperty); }
             set { SetValue(ClassesProperty, value); }
         }
-.
+
         public static readonly DependencyProperty ClassesProperty =
             DependencyProperty.Register("Classes", typeof(ObservableCollection<Class>), typeof(AdminPageClass));
         #endregion
