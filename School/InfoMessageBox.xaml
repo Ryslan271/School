@@ -5,8 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:School"
         mc:Ignorable="d"
-        Title="" Height="250" Width="400">
-    <Grid Style="{DynamicResource StyleGrid}" Loaded="Grid_Loaded">
-        <TextBlock x:Name="textInfo"/>
+        Title="" Height="250" Width="450" Loaded="Window_Loaded" Closed="Window_Closed">
+
+    <Window.Resources>
+        <Style TargetType="ListBoxItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border x:Name="border">
+                            <ContentPresenter></ContentPresenter>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="border"  Property="Background" Value="Transparent"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Style="{DynamicResource StyleGrid}">
+        <Border Margin="10" BorderBrush="BlueViolet" BorderThickness="1">
+            <ListBox x:Name="list" Margin="16" BorderBrush="#00000000" Background="#00000000" Padding="10"/>
+        </Border>
     </Grid>
 </Window>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,14 +21,18 @@ namespace School
     public partial class InfoMessageBox : Window
     {
         public static bool condition = false;
-        public InfoMessageBox(string text)
+        public InfoMessageBox(ArrayList text)
         {
             InitializeComponent();
-
-            textInfo.Text = text;
+            list.ItemsSource = text;
         }
 
-        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            condition = true;
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
         {
             condition = true;
         }
