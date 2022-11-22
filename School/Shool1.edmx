@@ -59,7 +59,6 @@
           <Property Name="idLessonEmloyee" Type="int" />
           <Property Name="DataTimeStart" Type="time" Precision="7" />
           <Property Name="DataTimeFinich" Type="time" Precision="7" />
-          <Property Name="idWeek" Type="int" Nullable="false" />
           <Property Name="Activ" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Student">
@@ -93,15 +92,8 @@
           <Property Name="DateVisitLessons" Type="date" />
           <Property Name="Presence" Type="bit" Nullable="false" />
           <Property Name="IdTeacher" Type="int" Nullable="false" />
-          <Property Name="TimeStart" Type="nvarchar" MaxLength="50" />
-          <Property Name="TimeFinish" Type="nvarchar" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="Week">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="15" />
+          <Property Name="TimeStart" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TimeFinish" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="FK_Employee_JobTitle">
           <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="1" />
@@ -148,18 +140,6 @@
             </Principal>
             <Dependent Role="Schedule">
               <PropertyRef Name="idLessonEmloyee" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Schedule_Week">
-          <End Role="Week" Type="Self.Week" Multiplicity="1" />
-          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Week">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Schedule">
-              <PropertyRef Name="idWeek" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -233,7 +213,6 @@
           <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudentLesson" EntityType="Self.StudentLesson" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VisitLeson" EntityType="Self.VisitLeson" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Week" EntityType="Self.Week" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Employee_JobTitle" Association="Self.FK_Employee_JobTitle">
             <End Role="JobTitle" EntitySet="JobTitle" />
             <End Role="Employee" EntitySet="Employee" />
@@ -248,10 +227,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_Schedule_LessonEmployee" Association="Self.FK_Schedule_LessonEmployee">
             <End Role="LessonEmployee" EntitySet="LessonEmployee" />
-            <End Role="Schedule" EntitySet="Schedule" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Schedule_Week" Association="Self.FK_Schedule_Week">
-            <End Role="Week" EntitySet="Week" />
             <End Role="Schedule" EntitySet="Schedule" />
           </AssociationSet>
           <AssociationSet Name="FK_Student_Class" Association="Self.FK_Student_Class">
@@ -343,10 +318,8 @@
           <Property Name="idLessonEmloyee" Type="Int32" />
           <Property Name="DataTimeStart" Type="Time" Precision="7" />
           <Property Name="DataTimeFinich" Type="Time" Precision="7" />
-          <Property Name="idWeek" Type="Int32" Nullable="false" />
           <Property Name="Activ" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="LessonEmployee" Relationship="Self.FK_Schedule_LessonEmployee" FromRole="Schedule" ToRole="LessonEmployee" />
-          <NavigationProperty Name="Week" Relationship="Self.FK_Schedule_Week" FromRole="Schedule" ToRole="Week" />
         </EntityType>
         <EntityType Name="Student">
           <Key>
@@ -386,16 +359,6 @@
           <Property Name="IdTeacher" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Lesson" Relationship="Self.FK_VisitLeson_Lesson" FromRole="VisitLeson" ToRole="Lesson" />
           <NavigationProperty Name="Student" Relationship="Self.FK_VisitLeson_Student" FromRole="VisitLeson" ToRole="Student" />
-          <Property Name="TimeStart" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TimeFinish" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Week">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Schedule" Relationship="Self.FK_Schedule_Week" FromRole="Week" ToRole="Schedule" />
         </EntityType>
         <Association Name="FK_Student_Class">
           <End Role="Class" Type="Self.Class" Multiplicity="1" />
@@ -481,18 +444,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Schedule_Week">
-          <End Role="Week" Type="Self.Week" Multiplicity="1" />
-          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Week">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Schedule">
-              <PropertyRef Name="idWeek" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_StudentLesson_Student">
           <End Role="Student" Type="Self.Student" Multiplicity="1" />
           <End Role="StudentLesson" Type="Self.StudentLesson" Multiplicity="*" />
@@ -527,7 +478,6 @@
           <EntitySet Name="Student" EntityType="Self.Student" />
           <EntitySet Name="StudentLesson" EntityType="Self.StudentLesson" />
           <EntitySet Name="VisitLeson" EntityType="Self.VisitLeson" />
-          <EntitySet Name="Week" EntityType="Self.Week" />
           <AssociationSet Name="FK_Student_Class" Association="Self.FK_Student_Class">
             <End Role="Class" EntitySet="Class" />
             <End Role="Student" EntitySet="Student" />
@@ -554,10 +504,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_Schedule_LessonEmployee" Association="Self.FK_Schedule_LessonEmployee">
             <End Role="LessonEmployee" EntitySet="LessonEmployee" />
-            <End Role="Schedule" EntitySet="Schedule" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Schedule_Week" Association="Self.FK_Schedule_Week">
-            <End Role="Week" EntitySet="Week" />
             <End Role="Schedule" EntitySet="Schedule" />
           </AssociationSet>
           <AssociationSet Name="FK_StudentLesson_Student" Association="Self.FK_StudentLesson_Student">
@@ -633,7 +579,6 @@
                 <ScalarProperty Name="idLessonEmloyee" ColumnName="idLessonEmloyee" />
                 <ScalarProperty Name="DataTimeStart" ColumnName="DataTimeStart" />
                 <ScalarProperty Name="DataTimeFinich" ColumnName="DataTimeFinich" />
-                <ScalarProperty Name="idWeek" ColumnName="idWeek" />
                 <ScalarProperty Name="Activ" ColumnName="Activ" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -664,22 +609,12 @@
           <EntitySetMapping Name="VisitLeson">
             <EntityTypeMapping TypeName="School1Model.VisitLeson">
               <MappingFragment StoreEntitySet="VisitLeson">
-                <ScalarProperty Name="TimeFinish" ColumnName="TimeFinish" />
-                <ScalarProperty Name="TimeStart" ColumnName="TimeStart" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="IdLesson" ColumnName="IdLesson" />
                 <ScalarProperty Name="IdStudent" ColumnName="IdStudent" />
                 <ScalarProperty Name="DateVisitLessons" ColumnName="DateVisitLessons" />
                 <ScalarProperty Name="Presence" ColumnName="Presence" />
                 <ScalarProperty Name="IdTeacher" ColumnName="IdTeacher" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Week">
-            <EntityTypeMapping TypeName="School1Model.Week">
-              <MappingFragment StoreEntitySet="Week">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

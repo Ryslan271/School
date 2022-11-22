@@ -14,7 +14,6 @@
         <EntityTypeShape EntityType="School1Model.Student" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="School1Model.StudentLesson" Width="1.5" PointX="5.25" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="School1Model.VisitLeson" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="School1Model.Week" Width="1.5" PointX="5.25" PointY="11.5" IsExpanded="true" />
         <AssociationConnector Association="School1Model.FK_Student_Class" ManuallyRouted="false" />
         <AssociationConnector Association="School1Model.FK_Employee_JobTitle" ManuallyRouted="false" />
         <AssociationConnector Association="School1Model.FK_LessonEmployee_Employee" ManuallyRouted="false" />
@@ -22,7 +21,6 @@
         <AssociationConnector Association="School1Model.FK_StudentLesson_Lesson" ManuallyRouted="false" />
         <AssociationConnector Association="School1Model.FK_VisitLeson_Lesson" ManuallyRouted="false" />
         <AssociationConnector Association="School1Model.FK_Schedule_LessonEmployee" ManuallyRouted="false" />
-        <AssociationConnector Association="School1Model.FK_Schedule_Week" ManuallyRouted="false" />
         <AssociationConnector Association="School1Model.FK_StudentLesson_Student" ManuallyRouted="false" />
         <AssociationConnector Association="School1Model.FK_VisitLeson_Student" ManuallyRouted="false" />
       </Diagram>
