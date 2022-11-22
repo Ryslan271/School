@@ -72,7 +72,7 @@ namespace School.AdminPage
 
             var validationResult = DBConnect.db.ChangeTracker.Entries().ToList().All(entry =>
             {
-                if (entry.Entity is Schedule schedule == false)
+                if (!(entry.Entity is Schedule schedule))
                     return true;
 
                 if (EntityValidator(schedule) == false)
@@ -158,7 +158,7 @@ namespace School.AdminPage
 
         private void DataGridSchedule_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            if (!(e.Column.Header.ToString() == "Начало урока") || e.EditingElement is TextBox editingElement == false)
+            if (!(e.Column.Header.ToString() == "Начало урока") || !(e.EditingElement is TextBox editingElement))
                 return;
 
             Match match = Regex.Match(editingElement.Text.Trim(), @"^(?:(?<Datetime>\d{1,2}:(?:\d{1,2}))|(?<Hours>\d{1,2}))");

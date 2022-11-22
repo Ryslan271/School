@@ -92,23 +92,23 @@
       <DependentUpon>AdminPageStudents.xaml</DependentUpon>
     </Compile>
     <Compile Include="Class.cs">
-      <DependentUpon>School.tt</DependentUpon>
+      <DependentUpon>Shool1.tt</DependentUpon>
     </Compile>
     <Compile Include="DBConnect.cs" />
     <Compile Include="Employee.cs">
-      <DependentUpon>School.tt</DependentUpon>
+      <DependentUpon>Shool1.tt</DependentUpon>
     </Compile>
     <Compile Include="InfoMessageBox.xaml.cs">
       <DependentUpon>InfoMessageBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="JobTitle.cs">
-      <DependentUpon>School.tt</DependentUpon>
+      <DependentUpon>Shool1.tt</DependentUpon>
     </Compile>
     <Compile Include="Lesson.cs">
-      <DependentUpon>School.tt</DependentUpon>
+      <DependentUpon>Shool1.tt</DependentUpon>
     </Compile>
     <Compile Include="LessonEmployee.cs">
-      <DependentUpon>School.tt</DependentUpon>
+      <DependentUpon>Shool1.tt</DependentUpon>
     </Compile>
     <Compile Include="ListWindow\AddStudents.xaml.cs">
       <DependentUpon>AddStudents.xaml</DependentUpon>
@@ -117,40 +117,40 @@
       <DependentUpon>DeleteStudents.xaml</DependentUpon>
     </Compile>
     <Compile Include="Schedule.cs">
-      <DependentUpon>School.tt</DependentUpon>
+      <DependentUpon>Shool1.tt</DependentUpon>
     </Compile>
-    <Compile Include="School.Context.cs">
+    <Compile Include="Shool1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>School.Context.tt</DependentUpon>
+      <DependentUpon>Shool1.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="School.cs">
+    <Compile Include="Shool1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>School.tt</DependentUpon>
+      <DependentUpon>Shool1.tt</DependentUpon>
     </Compile>
-    <Compile Include="School.Designer.cs">
+    <Compile Include="Shool1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>School.edmx</DependentUpon>
+      <DependentUpon>Shool1.edmx</DependentUpon>
     </Compile>
     <Compile Include="Student.cs">
-      <DependentUpon>School.tt</DependentUpon>
+      <DependentUpon>Shool1.tt</DependentUpon>
     </Compile>
     <Compile Include="StudentLesson.cs">
-      <DependentUpon>School.tt</DependentUpon>
+      <DependentUpon>Shool1.tt</DependentUpon>
     </Compile>
     <Compile Include="StudentWindow.xaml.cs">
       <DependentUpon>StudentWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="sysdiagrams.cs">
-      <DependentUpon>School.tt</DependentUpon>
     </Compile>
     <Compile Include="Teacher.xaml.cs">
       <DependentUpon>Teacher.xaml</DependentUpon>
     </Compile>
     <Compile Include="VisitLeson.cs">
-      <DependentUpon>School.tt</DependentUpon>
+      <DependentUpon>Shool1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Week.cs">
+      <DependentUpon>Shool1.tt</DependentUpon>
     </Compile>
     <Page Include="Administrator.xaml">
       <SubType>Designer</SubType>
@@ -244,14 +244,14 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <EntityDeploy Include="School.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>School.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="School.edmx.diagram">
-      <DependentUpon>School.edmx</DependentUpon>
-    </None>
     <Compile Include="Teacher.Extension.cs" />
+    <EntityDeploy Include="Shool1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Shool1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Shool1.edmx.diagram">
+      <DependentUpon>Shool1.edmx</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -271,15 +271,15 @@
     <Resource Include="Picture\WhiteThemeIcon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="School.Context.tt">
+    <Content Include="Shool1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>School.edmx</DependentUpon>
-      <LastGenOutput>School.Context.cs</LastGenOutput>
+      <DependentUpon>Shool1.edmx</DependentUpon>
+      <LastGenOutput>Shool1.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="School.tt">
+    <Content Include="Shool1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>School.edmx</DependentUpon>
-      <LastGenOutput>School.cs</LastGenOutput>
+      <DependentUpon>Shool1.edmx</DependentUpon>
+      <LastGenOutput>Shool1.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

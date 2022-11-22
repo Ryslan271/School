@@ -12,16 +12,18 @@ namespace School
     using System;
     using System.Collections.Generic;
     
-    public partial class VisitLeson
+    public partial class Week
     {
-        public int id { get; set; }
-        public int IdLesson { get; set; }
-        public int IdStudent { get; set; }
-        public Nullable<System.DateTime> DateVisitLessons { get; set; }
-        public bool Presence { get; set; }
-        public int IdTeacher { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Week()
+        {
+            this.Schedule = new HashSet<Schedule>();
+        }
     
-        public virtual Lesson Lesson { get; set; }
-        public virtual Student Student { get; set; }
+        public int id { get; set; }
+        public string Name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Schedule> Schedule { get; set; }
     }
 }

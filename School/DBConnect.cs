@@ -9,11 +9,11 @@ namespace School
 {
     internal class DBConnect
     {
-        public static Entities db { get; }
+        public static School1Entities db { get; }
 
         static DBConnect()
         {
-            db = new Entities();
+            db = new School1Entities();
 
             db.Class.Load();
             db.Student.Load();

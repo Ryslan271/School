@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         d:DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="Administrator" Height="450" Width="800" Closed="Window_Closed" >
-    <Grid>
+    <Grid Style="{DynamicResource StyleGrid}">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="20"/>

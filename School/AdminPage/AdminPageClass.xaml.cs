@@ -51,7 +51,7 @@ namespace School.AdminPage
 
             var validationResult = DBConnect.db.ChangeTracker.Entries().ToList().All(entry =>
             {
-                if (entry.Entity is Class classs == false)
+                if (!(entry.Entity is Class classs))
                     return true;
 
                 if (EntityValidator(classs) == false)

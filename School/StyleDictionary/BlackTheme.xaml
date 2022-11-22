@@ -2,8 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="StyleGrid">
-        <Setter Property="Grid.Background" Value="#FF272727"/>
+        <Setter Property="Grid.Background" Value="#FF404040"/>
         <Setter Property="TextBlock.Foreground" Value="#FFA78F8F"/>
+        <Setter Property="TextBlock.FontFamily" Value="Bahnschrift SemiBold"/>
     </Style>
 
     <Style TargetType="TextBox" x:Key="StyleTextBox">
