@@ -115,7 +115,7 @@ namespace School.AdminPage
             foreach (StudentLesson item in studentLesson)
             {
                 if (!(item.IdLesson.ToString() != "" && item.IdStudent.ToString() != "" &&
-                    item.IdLesson != null && item.IdStudent != null))
+                    item.Lesson != null && item.Student != null))
                     continue;
 
                 StudentLessons.Remove(item);

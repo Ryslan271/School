@@ -10,22 +10,27 @@
     <Grid Style="{DynamicResource StyleGrid}">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="25"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Border Grid.ColumnSpan="2" BorderBrush="#000" BorderThickness="0.5"> 
+        
+        <Border Grid.ColumnSpan="3" BorderBrush="#000" BorderThickness="0.5">
             <StackPanel Background="#FF8EA9FF">
                 <TextBlock FontSize="34" HorizontalAlignment="Center" Text="Панель администратора"/>
             </StackPanel>
         </Border>
+
+        <GridSplitter Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" ShowsPreview="True"
+                        Width="3" Background="#FFBBB9B9" Margin="10 0 5 0"/>
+
+        <TextBlock Grid.Column="2" Margin="10 0 0 0" Grid.Row="1" x:Name="MessageInfo"/>
+        <Frame Grid.Row="2" Grid.Column="2" Margin="10 0 10 10" NavigationUIVisibility="Hidden" x:Name="PageAdmin"/>
         
-        <TextBlock Grid.Column="1" Margin="10 0 0 0" Grid.Row="1" x:Name="MessageInfo"/>
-
-
         <StackPanel Grid.Row="2" Orientation="Vertical">
             <Button Content="Учителя" Margin="10 5 0 0" Grid.Column="0" Click="ButtonClickEmployee" Style="{StaticResource ButtomInAdmin}"/>
             <Button Margin="10 5 0 0" Grid.Column="1" Content="Ученики" Click="ButtonClickStudent" Style="{StaticResource ButtomInAdmin}"/>
@@ -39,8 +44,5 @@
                 <TextBlock TextAlignment="Center"> Уроки<LineBreak/>Студентов</TextBlock>
             </Button>
         </StackPanel>
-
-        
-        <Frame Grid.Row="2" Grid.Column="1" Margin="10 0 10 10" NavigationUIVisibility="Hidden" x:Name="PageAdmin"/>
     </Grid>
 </Window>
