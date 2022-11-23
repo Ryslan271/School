@@ -26,6 +26,7 @@ namespace School.AdminPage
     {
         private ObservableCollection<Employee> _employees;
         private ObservableCollection<Lesson> _lesson;
+        private ObservableCollection<LessonEmployee> _lessomEmployee;
 
         private ObservableCollection<Lesson> _Editlesson;
         private DataGridRow _row;
@@ -53,6 +54,9 @@ namespace School.AdminPage
 
         public AdminPageSchedules()
         {
+            _lessomEmployee = new ObservableCollection<LessonEmployee>
+                (DBConnect.db.LessonEmployee.Local.Where(x => x.Employee.Activ == true && x.Lesson.Active == true));
+
             Schedules = new ObservableCollection<Schedule> 
                 (DBConnect.db.Schedule.Local.Where(x => x.LessonEmployee.Employee.Activ == true && x.LessonEmployee.Lesson.Active == true));
 
@@ -105,10 +109,10 @@ namespace School.AdminPage
         }
         #endregion
 
-        private bool EntityValidator(Schedule schedule) =>  Schedules.Count(x => x.NumberCabinet == schedule.NumberCabinet && 
-                                                            x.idLessonEmloyee == schedule.idLessonEmloyee) == 1 &&
-                                                            schedule.NumberCabinet != null &&
-                                                            schedule.DataTimeStart != null;
+        private bool EntityValidator(Schedule schedule) => (Schedules.Select(s => s).Except(Schedules
+                                                            .Where(s => s.NumberCabinet == schedule.NumberCabinet
+                                                            && s.idLessonEmloyee == schedule.idLessonEmloyee)).Count()) < Schedules.Select(s => s)
+                                                            .Count();
 
         #region Добавление новой строки в DataGrid
         private void ButtomAddClick(object sender, RoutedEventArgs e)
@@ -164,13 +168,14 @@ namespace School.AdminPage
         {
             if (e.Column.Header.ToString() == "Учитель" && (e.EditingElement as ComboBox)?.SelectedItem != null)
             {
-                _Editlesson = new ObservableCollection<Lesson>
-                    (
-                        Schedules.Where(x => x.LessonEmployee.Employee == ((e.EditingElement as ComboBox).SelectedItem as Employee))
-                        .Select(x => x.LessonEmployee.Lesson)
-                    );
-
-                _row = e.Row;
+                if (((e.EditingElement as ComboBox).SelectedItem as Employee)?.LessonEmployee != null)
+                {
+                    _Editlesson = new ObservableCollection<Lesson>
+                        (
+                            _lessomEmployee.Where(x => x.Employee == ((e.EditingElement as ComboBox).SelectedItem as Employee)).Select(s => s.Lesson)
+                        );
+                    _row = e.Row;
+                }
             }
 
             if (!(e.Column.Header.ToString() == "Начало урока") || !(e.EditingElement is TextBox editingElement))
@@ -185,6 +190,7 @@ namespace School.AdminPage
                 editingElement.Text = null;
         }
         #endregion
+
         private void DataGridSchedule_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
         {
             if (e.Column.Header.ToString() == "Название урока")
