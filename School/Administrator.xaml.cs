@@ -83,5 +83,9 @@ namespace School
         }
         #endregion
 
+        private void Image_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            ThemeChange.Change();
+        }
     }
 }

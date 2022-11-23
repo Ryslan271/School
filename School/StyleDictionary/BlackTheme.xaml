@@ -17,6 +17,10 @@
         <Setter Property="Foreground" Value="#FFDFDFDF"/>
     </Style>
 
+    <Style TargetType="DataGridRowHeader">
+        <Setter Property="Background" Value="#FF373737"/>
+    </Style>
+    
     <Style TargetType="Image" x:Name="imageStyle">
         <Setter Property="Source" Value="\Picture\WhiteThemeIcon.png" />
     </Style>
