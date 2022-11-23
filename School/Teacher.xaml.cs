@@ -2,22 +2,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Data.Entity;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Markup;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace School
 {
@@ -55,21 +44,6 @@ namespace School
                 if (_Presence == value) return;
 
                 _Presence = value;
-            }
-        }
-
-        private bool _checkMissLesson;
-        public bool checkMissLesson
-        {
-            get
-            {
-                return _checkMissLesson;
-            }
-            set
-            {
-                if (_checkMissLesson == value) return;
-
-                _checkMissLesson = value;
             }
         }
 
@@ -188,7 +162,7 @@ namespace School
         public void UpdateInfoMessage()
         {
             missingLessonList.Clear();
-
+            infoMessage.MouseUp += InfoMessage_MouseUp;
             if (visit.Where(v => v.DateVisitLessons == DateTime.Today && v.IdTeacher == IdUSer.Id).Select(v => v.IdLesson).Count() > 0)
             {
                 foreach (var entity in lesson.SelectMany(l => l.LessonEmployee).Where(emp => emp.IdEmployees == IdUSer.Id).Select(les => les.IdLesson).Distinct().ToList().Except(visit.Where(v => v.DateVisitLessons == DateTime.Today && v.IdTeacher == IdUSer.Id).Select(v => v.IdLesson).Distinct().ToList()))
@@ -207,8 +181,6 @@ namespace School
             }
             else
             {
-                checkMissLesson = true;
-                infoMessage.MouseUp += InfoMessage_MouseUp;
                 infoMessage.Text = "Нажмите чтобы посмотреть по каким предметам\nне отмечены ученики";
                 infoMessage.Foreground = Brushes.Red;
             }
@@ -216,20 +188,16 @@ namespace School
 
         private void InfoMessage_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            if(!(infoMessage.Text == "Нажмите чтобы посмотреть по каким предметам\nне отмечены ученики"))
+                return;
             ArrayList str = new ArrayList();
-            if (checkMissLesson)
-            {
-                str.Add("За " + DateTime.Today.ToString("d") + " не отмечены ученики по предметам: \n");
-                foreach (var entity in selectLessen.Items)
-                    if (missingLessonList.Exists(m => m == entity.ToString().Split(' ').FirstOrDefault()))
-                        str.Add("● " + entity);
-            }
+            str.Add("За " + DateTime.Today.ToString("d") + " не отмечены ученики по предметам: \n");
+            foreach (var entity in selectLessen.Items)
+                if (missingLessonList.Exists(m => m == entity.ToString().Split(' ').FirstOrDefault()))
+                    str.Add("● " + entity);
             InfoMessageBox info = new InfoMessageBox(str);
-            //asda
-            if (!InfoMessageBox.condition)
-                info.Show();
-            else
-                info.Close();
+            info.Show();
+            
         }
 
         //Открытие окна авторизации

@@ -29,6 +29,10 @@ namespace School
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            if (condition)
+            {
+                this.Close();
+            }
             condition = true;
         }
 

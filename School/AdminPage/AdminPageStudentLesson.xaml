@@ -9,7 +9,7 @@
       DataContext="{Binding RelativeSource={RelativeSource Self}}"
       Title="AdminPageStudentLesson">
 
-    <Grid>
+    <Grid Style="{DynamicResource StyleGrid}">
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
