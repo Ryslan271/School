@@ -18,7 +18,7 @@
 
         <TextBlock Text="Расписание"/>
 
-        <DataGrid Grid.Row="1" CanUserAddRows="False" ItemsSource="{Binding StudentLessons}" AutoGenerateColumns="False" x:Name="DataGridStudentLesson">
+        <DataGrid Grid.Row="1" CanUserAddRows="False" ItemsSource="{Binding StudentLessons}" AutoGenerateColumns="False" x:Name="DataGridStudentLesson" LoadingRow="DataGridStudentLesson_LoadingRow">
             <DataGrid.Columns>
                 <DataGridComboBoxColumn Header="Ученики" Width="*"
                                         SelectedItemBinding="{Binding Path=Student}"

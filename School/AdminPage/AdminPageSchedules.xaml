@@ -17,7 +17,7 @@
 
         <TextBlock Text="Расписание"/>
     
-        <DataGrid Grid.Row="1" CanUserAddRows="False" ItemsSource="{Binding Schedules}" CellEditEnding="DataGridSchedule_CellEditEnding" AutoGenerateColumns="False" x:Name="DataGridSchedule">
+        <DataGrid Grid.Row="1" CanUserAddRows="False" ItemsSource="{Binding Schedules}" CellEditEnding="DataGridSchedule_CellEditEnding" AutoGenerateColumns="False" x:Name="DataGridSchedule" LoadingRow="DataGridSchedule_LoadingRow">
             <DataGrid.Columns>
                 <DataGridComboBoxColumn Header="Учитель" Width="*"
                                         SelectedItemBinding="{Binding Path=LessonEmployee.Employee}"

@@ -107,6 +107,9 @@ namespace School.AdminPage
             Administrator.MessageInfoStart(true);
             Administrator.TimerMessageInfo();
         }
+
         #endregion
+
+        private void DataGridClasses_LoadingRow(object sender, DataGridRowEventArgs e) => e.Row.Header = (e.Row.GetIndex() + 1).ToString();
     }
 }

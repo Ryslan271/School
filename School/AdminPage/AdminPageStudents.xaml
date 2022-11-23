@@ -17,7 +17,7 @@
 
         <TextBlock Text="Ученики"/>
 
-        <DataGrid Grid.Row="1" CanUserAddRows="False" AutoGenerateColumns="False" ItemsSource="{Binding Students}" x:Name="DataGridStudents">
+        <DataGrid Grid.Row="1" CanUserAddRows="False" AutoGenerateColumns="False" ItemsSource="{Binding Students}" x:Name="DataGridStudents" LoadingRow="DataGridStudents_LoadingRow">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="2*" Header="Фамилия" Binding="{Binding Path=Surname}"/>
                 <DataGridTextColumn Width="2*" Header="Имя" Binding="{Binding StringFormat='{}{0}', Path=Name}"/>

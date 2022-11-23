@@ -17,7 +17,7 @@
 
         <TextBlock Text="Уроки"/>
 
-        <DataGrid Grid.Row="1" CanUserAddRows="False" AutoGenerateColumns="False" ItemsSource="{Binding Lessons}" x:Name="DataGridLessons">
+        <DataGrid Grid.Row="1" CanUserAddRows="False" AutoGenerateColumns="False" ItemsSource="{Binding Lessons}" x:Name="DataGridLessons" LoadingRow="DataGridLessons_LoadingRow">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="2*" Header="Название предмета" Binding="{Binding Path=Name}"/>
                 <DataGridCheckBoxColumn Width="2*" Header="Удален/Активен" Binding="{Binding Path=Active}"/>
