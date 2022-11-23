@@ -24,6 +24,8 @@ namespace School.ListWindow
         IEnumerable<Student> students = DBConnect.db.Student;
         IEnumerable<StudentLesson> studentlesson = DBConnect.db.StudentLesson;
         IEnumerable<Lesson> lesson = DBConnect.db.Lesson;
+        IEnumerable<Schedule> schedules = DBConnect.db.Schedule;
+        IEnumerable<Employee> employees = DBConnect.db.Employee;
         public static bool AddStudentLoad = false;
 
         List<string> missingStudentList = new List<string>();
@@ -31,11 +33,10 @@ namespace School.ListWindow
         {
             InitializeComponent();
 
-            foreach (var entity in lesson)
+            foreach (var entity in employees.Where(e => e.id == IdUSer.Id).SelectMany(s => s.LessonEmployee).Select(l => l.Lesson))
             {
                 lessonList.Items.Add(entity.Name);
             }
-            Teacher.comboBoxItem.Add("");//доделать
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -75,7 +76,6 @@ namespace School.ListWindow
                     infoMessage.Text = "Данные сохранены";
                 }
             }
-            
             DBConnect.db.SaveChangesAsync();
             studentList.ItemsSource = null;
         }

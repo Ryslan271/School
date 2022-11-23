@@ -30,6 +30,10 @@
         <Setter Property="Foreground" Value="#FFDFDFDF"/>
     </Style>
 
+    <Style TargetType="ListBoxItem">
+        <Setter Property="Background" Value="#FF404040"/>
+    </Style>
+
     <Style TargetType="ComboBoxItem">
         <Setter Property="Background" Value="#FF868686"/>
         <Setter Property="Foreground" Value="White"/>

@@ -42,8 +42,6 @@ namespace School
         //Лист со списком предметов, по которым сегодня не отметили студентов
         List<string> missingLessonList = new List<string>();
 
-
-        public static ObservableCollection<string> comboBoxItem = new ObservableCollection<string>();
         //Переменная checkBox'a
         private bool _Presence;
         public bool Presence
@@ -78,18 +76,18 @@ namespace School
         public Teacher()
         {
             InitializeComponent();
+
             //Добавление предметов в ComboBox
             var queryLesson = (from less in lesson
-                              from lessonEmployee in less.LessonEmployee
-                              from schedule in lessonEmployee.Schedule
-                              where lessonEmployee.IdEmployees == IdUSer.Id
-                              select new
-                              {
-                                  nameLesson = less.Name.ToString() + " " + schedule.DataTimeStart.ToString().Substring(0, 5) + " " + schedule.DataTimeFinich.ToString().Substring(0, 5)
-                              }).Distinct();
+                               from lessonEmployee in less.LessonEmployee
+                               from schedule in lessonEmployee.Schedule
+                               where lessonEmployee.IdEmployees == IdUSer.Id
+                               select new
+                               {
+                                   nameLesson = less.Name.ToString() + " " + schedule.DataTimeStart.ToString().Substring(0, 5) + " " + schedule.DataTimeFinich.ToString().Substring(0, 5)
+                               }).Distinct();
             foreach (var entity in queryLesson)
-                comboBoxItem.Add(entity.nameLesson);
-            selectLessen.ItemsSource = comboBoxItem;
+                selectLessen.Items.Add(entity.nameLesson);
 
             //Добавление сегоднящней даты
             titleList.Text += DateTime.Today.ToString("d");
@@ -100,15 +98,15 @@ namespace School
 
             //Запись в таблицу
             scheduleTable.ItemsSource = (from lessEmp in lessonEmployees
-                                        from schedule in lessEmp.Schedule
+                                         from schedule in lessEmp.Schedule
                                          where lessEmp.IdEmployees == IdUSer.Id
-                                        select new
-                                        {
-                                            NumberCabinet = schedule.NumberCabinet,
-                                            idLessonEmployee = lessonEmployees.Where(l => l.id == schedule.idLessonEmloyee).Select(l => l.Lesson).Select(l => l.Name).FirstOrDefault().ToString(),
-                                            DataTimeStart = schedule.DataTimeStart.ToString().Substring(0,5),
-                                            DataTimeFinich = schedule.DataTimeFinich.ToString().Substring(0, 5)
-                                        }).ToList();
+                                         select new
+                                         {
+                                             NumberCabinet = schedule.NumberCabinet,
+                                             idLessonEmployee = lessonEmployees.Where(l => l.id == schedule.idLessonEmloyee).Select(l => l.Lesson).Select(l => l.Name).FirstOrDefault().ToString(),
+                                             DataTimeStart = schedule.DataTimeStart.ToString().Substring(0, 5),
+                                             DataTimeFinich = schedule.DataTimeFinich.ToString().Substring(0, 5)
+                                         }).ToList();
             UpdateInfoMessage();
         }
 
@@ -129,7 +127,7 @@ namespace School
                     DBConnect.db.VisitLeson.Remove(entity);
                 }
             }
-           
+
             //Запись в бд
             foreach (var entity in presenceList)
             {
@@ -183,7 +181,7 @@ namespace School
             }
 
             if (presenceList.Count > 0)
-                StudentLesson.ItemsSource = queryStudent.ToList();
+                StudentLesson.ItemsSource = queryStudent;
         }
 
         //метод для обновления текстового поля с информацией о не отмеченых студентов за сегодня
@@ -218,19 +216,20 @@ namespace School
 
         private void InfoMessage_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            ArrayList str = new ArrayList();
             if (checkMissLesson)
             {
-                ArrayList str = new ArrayList();
                 str.Add("За " + DateTime.Today.ToString("d") + " не отмечены ученики по предметам: \n");
                 foreach (var entity in selectLessen.Items)
                     if (missingLessonList.Exists(m => m == entity.ToString().Split(' ').FirstOrDefault()))
                         str.Add("● " + entity);
-                InfoMessageBox info = new InfoMessageBox(str);
-                if (!InfoMessageBox.condition)
-                    info.Show();
-                else
-                    info.Close();
             }
+            InfoMessageBox info = new InfoMessageBox(str);
+            //asda
+            if (!InfoMessageBox.condition)
+                info.Show();
+            else
+                info.Close();
         }
 
         //Открытие окна авторизации
@@ -238,14 +237,18 @@ namespace School
 
         private void addStudent_Click(object sender, RoutedEventArgs e)
         {
-            if(!ListWindow.AddStudents.AddStudentLoad)
+            StudentLesson.ItemsSource = null;
+
+            if (!ListWindow.AddStudents.AddStudentLoad)
                 new ListWindow.AddStudents().Show();
         }
 
-        
+
         private void deleteStudent_Click(object sender, RoutedEventArgs e)
         {
-            if(!ListWindow.DeleteStudents.deleteStudentsLoad)
+            StudentLesson.ItemsSource = null;
+
+            if (!ListWindow.DeleteStudents.deleteStudentsLoad)
                 new ListWindow.DeleteStudents().Show();
         }
 

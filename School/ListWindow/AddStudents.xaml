@@ -18,6 +18,7 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
+                        <!--asda-->
                         <TextBlock Text="{Binding {}}"/>
                     </StackPanel>
                 </DataTemplate>
