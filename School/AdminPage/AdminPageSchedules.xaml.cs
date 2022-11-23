@@ -57,8 +57,7 @@ namespace School.AdminPage
             _lessomEmployee = new ObservableCollection<LessonEmployee>
                 (DBConnect.db.LessonEmployee.Local.Where(x => x.Employee.Activ == true && x.Lesson.Active == true));
 
-            Schedules = new ObservableCollection<Schedule> 
-                (DBConnect.db.Schedule.Local.Where(x => x.LessonEmployee.Employee.Activ == true && x.LessonEmployee.Lesson.Active == true));
+            Schedules = new ObservableCollection<Schedule> (DBConnect.db.Schedule);
 
             _employees = new ObservableCollection<Employee> (DBConnect.db.LessonEmployee.Local.Select(x => x.Employee).Distinct());
 
@@ -73,31 +72,27 @@ namespace School.AdminPage
             if (Administrator.Ask(true) == false)
                 return;
 
-            //if (DBConnect.db.ChangeTracker.HasChanges() == false)
-            //  return;
+            if (DBConnect.db.ChangeTracker.HasChanges() == false)
+              return;
 
-            var validationResult = DBConnect.db.ChangeTracker.Entries().ToList().All(entry =>
-            {
-                if (!(entry.Entity is Schedule schedule))
-                    return true;
 
-                if (schedule.LessonEmployee.Employee.Activ == false || schedule.LessonEmployee.Lesson.Active == false)
-                    schedule.Activ = false;
-
-                else if (schedule.LessonEmployee.Employee.Activ == true && schedule.LessonEmployee.Lesson.Active == true)
-                    schedule.Activ = true;
-
-                if (EntityValidator(schedule) == false)
+            var validationResult = DBConnect.db.ChangeTracker.Entries().ToList()
+                .Where(x => Schedules.Any(s => s != x.Entity as Schedule)).All(entry =>
                 {
-                    Administrator.MessageInfoStart(false);
-                    Administrator.TimerMessageInfo();
-                    return false;
-                }
+                    if (!(entry.Entity is Schedule schedule))
+                        return true;
 
-                schedule.DataTimeFinich = schedule.DataTimeStart + new TimeSpan(0, 45, 0);
+                    if (EntityValidator(schedule) == false)
+                    {
+                        Administrator.MessageInfoStart(false);
+                        Administrator.TimerMessageInfo();
+                        return false;
+                    }
 
-                return true;
-            });
+                    schedule.DataTimeFinich = schedule.DataTimeStart + new TimeSpan(0, 45, 0);
+
+                    return true;
+                });
 
             if (validationResult == false)
                 return;
@@ -109,16 +104,20 @@ namespace School.AdminPage
         }
         #endregion
 
-        private bool EntityValidator(Schedule schedule) => (Schedules.Select(s => s).Except(Schedules
-                                                            .Where(s => s.NumberCabinet == schedule.NumberCabinet
-                                                            && s.idLessonEmloyee == schedule.idLessonEmloyee)).Count()) < Schedules.Select(s => s)
-                                                            .Count();
+        private bool EntityValidator(Schedule schedule) => schedule.NumberCabinet != null &&
+                                                            schedule.DataTimeStart != null;
+
+                                                           //Schedules.Select(s => s).Except(DBConnect.db.Schedule
+                                                           //.Where(s => s.NumberCabinet == schedule.NumberCabinet &&
+                                                           //(s.DataTimeStart > schedule.DataTimeStart - new TimeSpan(0, 50, 0) ||
+                                                           //s.DataTimeStart < schedule.DataTimeStart))).Count() == 1
 
         #region Добавление новой строки в DataGrid
         private void ButtomAddClick(object sender, RoutedEventArgs e)
         {
             var schedule = new Schedule() { Activ = true };
             Schedules.Add(schedule);
+            DBConnect.db.Schedule.Local.Add(schedule);
             DataGridSchedule.SelectedIndex = DataGridSchedule.Items.Count - 1;
             DataGridSchedule.ScrollIntoView(schedule);
         }
