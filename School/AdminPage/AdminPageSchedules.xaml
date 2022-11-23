@@ -49,8 +49,8 @@
                         </Style>
                     </DataGridComboBoxColumn.EditingElementStyle>
                 </DataGridComboBoxColumn>
-                <DataGridTextColumn Width="*" Header="Номер кабинета" Binding="{Binding StringFormat='{}{0}', Path=NumberCabinet, TargetNullValue='—'}"/>
-                <DataGridTextColumn Width="*" Header="Начало урока" Binding="{Binding StringFormat=hh\\:mm, Path=DataTimeStart, TargetNullValue='—'}"/>
+                <DataGridTextColumn Width="*" Header="Номер кабинета" Binding="{Binding StringFormat='{}{0}', Path=NumberCabinet}"/>
+                <DataGridTextColumn Width="*" Header="Начало урока" Binding="{Binding StringFormat=hh\\:mm, Path=DataTimeStar}"/>
                 <DataGridCheckBoxColumn Width="2*" Header="Удален/Активен" Binding="{Binding Path=Activ}"/>
             </DataGrid.Columns>
         </DataGrid>
