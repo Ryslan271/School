@@ -35,6 +35,7 @@ namespace School.ListWindow
             {
                 lessonList.Items.Add(entity.Name);
             }
+            Teacher.comboBoxItem.Add("");//доделать
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -74,6 +75,7 @@ namespace School.ListWindow
                     infoMessage.Text = "Данные сохранены";
                 }
             }
+            
             DBConnect.db.SaveChangesAsync();
             studentList.ItemsSource = null;
         }

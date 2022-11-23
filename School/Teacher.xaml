@@ -8,8 +8,8 @@
         Height="450" Width="800" Closed="Window_Closed">
 
     <Window.Resources>
-        <SolidColorBrush  x:Key="NormalBrush" Color="{Binding colorOne}" />
-        <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{Binding colorOTwo}" />
+        <SolidColorBrush  x:Key="NormalBrush" Color="#FF646464" />
+        <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#FF868686" />
 
         <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="ToggleButton">
             <Grid>

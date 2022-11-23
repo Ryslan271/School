@@ -34,7 +34,7 @@ namespace School
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            condition = true;
+            condition = false;
         }
     }
 }
