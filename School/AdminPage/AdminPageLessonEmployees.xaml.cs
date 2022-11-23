@@ -82,9 +82,8 @@ namespace School.AdminPage
             Administrator.TimerMessageInfo();
 
         }
-        private bool EntityValidator(LessonEmployee lessonEmployee) =>
-                                                                      LessonEmployees.Count(x => x.IdLesson == lessonEmployee.IdLesson &&
-                                                                      x.IdEmployees == lessonEmployee.IdEmployees) == 1;
+        private bool EntityValidator(LessonEmployee lessonEmployee) => LessonEmployees.Count(x => x.IdLesson == lessonEmployee.IdLesson &&
+                                                                       x.IdEmployees == lessonEmployee.IdEmployees) == 1;
         #endregion
 
         #region Добавление новой строки в DataGrid

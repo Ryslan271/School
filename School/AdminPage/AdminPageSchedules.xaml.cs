@@ -70,11 +70,11 @@ namespace School.AdminPage
         #region Сохранение 
         private void ButtonSaveClick(object sender, RoutedEventArgs e)
         {
-            if (DataGridSchedule.SelectedItem != null && Administrator.Ask(true) == false)
+            if (Administrator.Ask(true) == false)
                 return;
 
-            if (DBConnect.db.ChangeTracker.HasChanges() == false)
-                return;
+            //if (DBConnect.db.ChangeTracker.HasChanges() == false)
+            //  return;
 
             var validationResult = DBConnect.db.ChangeTracker.Entries().ToList().All(entry =>
             {
