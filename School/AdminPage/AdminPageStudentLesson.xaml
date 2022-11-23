@@ -16,7 +16,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Расписание"/>
+        <TextBlock Text="Уроки учеников"/>
 
         <DataGrid Grid.Row="1" CanUserAddRows="False" ItemsSource="{Binding StudentLessons}" AutoGenerateColumns="False" x:Name="DataGridStudentLesson" LoadingRow="DataGridStudentLesson_LoadingRow">
             <DataGrid.Columns>
