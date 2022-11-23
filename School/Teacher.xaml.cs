@@ -25,7 +25,7 @@ namespace School
     /// Логика взаимодействия для Teacher.xaml
     /// </summary>
 
-    public partial class Teacher : Window, INotifyPropertyChanged 
+    public partial class Teacher : Window
     {
 
         //Ссылки на объекты бд
@@ -42,6 +42,8 @@ namespace School
         //Лист со списком предметов, по которым сегодня не отметили студентов
         List<string> missingLessonList = new List<string>();
 
+
+        public static ObservableCollection<string> comboBoxItem = new ObservableCollection<string>();
         //Переменная checkBox'a
         private bool _Presence;
         public bool Presence
@@ -73,42 +75,6 @@ namespace School
             }
         }
 
-        private Brush _brush1;
-        private Brush _brush2;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string propertyName)
-        {
-            if (this.PropertyChanged != null)
-            {
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-        public Brush Brush1
-        {
-            get
-            {
-                return _brush1;
-            }
-            set
-            {
-                _brush1 = value;
-                this.OnPropertyChanged("colorOne");
-            }
-        }
-
-        public Brush Brush2
-        {
-            get
-            {
-                return _brush2;
-            }
-            set
-            {
-                _brush2 = value;
-                this.OnPropertyChanged("colorTwo");
-            }
-        }
         public Teacher()
         {
             InitializeComponent();
@@ -121,8 +87,9 @@ namespace School
                               {
                                   nameLesson = less.Name.ToString() + " " + schedule.DataTimeStart.ToString().Substring(0, 5) + " " + schedule.DataTimeFinich.ToString().Substring(0, 5)
                               }).Distinct();
-            foreach(var entity in queryLesson)
-                selectLessen.Items.Add(entity.nameLesson);
+            foreach (var entity in queryLesson)
+                comboBoxItem.Add(entity.nameLesson);
+            selectLessen.ItemsSource = comboBoxItem;
 
             //Добавление сегоднящней даты
             titleList.Text += DateTime.Today.ToString("d");
@@ -289,19 +256,6 @@ namespace School
             presenceList.Add(checkBox.Content.ToString(), (bool)checkBox.IsChecked);
         }
 
-        private void Image_MouseUp_1(object sender, MouseButtonEventArgs e)
-        {
-            if (ThemeChange.position)
-            {
-                _brush1 = new SolidColorBrush( Color.FromRgb(64, 64, 64));
-                _brush2 = new SolidColorBrush(Color.FromRgb(55, 55, 55));
-            }
-            else
-            {
-                _brush1 = new SolidColorBrush(Color.FromRgb(226, 226, 226));
-                _brush2 = new SolidColorBrush(Color.FromRgb(255, 255, 255));
-            }
-            ThemeChange.Change();
-        }
+        private void Image_MouseUp_1(object sender, MouseButtonEventArgs e) => ThemeChange.Change();
     }
 }

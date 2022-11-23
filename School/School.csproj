@@ -265,7 +265,7 @@
     <Resource Include="Picture\Log_main.png" />
     <Resource Include="Picture\TeacherPic.png" />
     <Resource Include="Picture\AdminPic.png" />
-    <Resource Include="Picture\PidorPic.png" />
+    <Resource Include="Picture\Boy.png" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
