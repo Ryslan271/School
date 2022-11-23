@@ -27,6 +27,9 @@ namespace School.AdminPage
         private ObservableCollection<Employee> _employees;
         private ObservableCollection<Lesson> _lesson;
 
+        private ObservableCollection<Lesson> _Editlesson;
+        private DataGridRow _row;
+
         #region Связка с окном
         public ObservableCollection<Employee> Employees
         {
@@ -53,7 +56,7 @@ namespace School.AdminPage
             Schedules = new ObservableCollection<Schedule> 
                 (DBConnect.db.Schedule.Local.Where(x => x.LessonEmployee.Employee.Activ == true && x.LessonEmployee.Lesson.Active == true));
 
-            _employees = new ObservableCollection<Employee> (DBConnect.db.Employee.Local.Where(x => x.Activ == true));
+            _employees = new ObservableCollection<Employee> (DBConnect.db.LessonEmployee.Local.Select(x => x.Employee).Distinct());
 
             _lesson = new ObservableCollection<Lesson> (DBConnect.db.Lesson.Local.Where(x => x.Active == true));
 
@@ -159,6 +162,17 @@ namespace School.AdminPage
         #region Работа с TimeSpam колонки времени
         private void DataGridSchedule_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
+            if (e.Column.Header.ToString() == "Учитель" && (e.EditingElement as ComboBox)?.SelectedItem != null)
+            {
+                _Editlesson = new ObservableCollection<Lesson>
+                    (
+                        Schedules.Where(x => x.LessonEmployee.Employee == ((e.EditingElement as ComboBox).SelectedItem as Employee))
+                        .Select(x => x.LessonEmployee.Lesson)
+                    );
+
+                _row = e.Row;
+            }
+
             if (!(e.Column.Header.ToString() == "Начало урока") || !(e.EditingElement is TextBox editingElement))
                 return;
 
@@ -171,7 +185,16 @@ namespace School.AdminPage
                 editingElement.Text = null;
         }
         #endregion
+        private void DataGridSchedule_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            if (e.Column.Header.ToString() == "Название урока")
+                if (e.Row == _row)
+                    _lesson = _Editlesson;
+                else
+                    _lesson = new ObservableCollection<Lesson>(DBConnect.db.Lesson.Local.Where(x => x.Active == true));
+        }
 
         private void DataGridSchedule_LoadingRow(object sender, DataGridRowEventArgs e) => e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+
     }
 }
