@@ -28,15 +28,16 @@
     </Style>
 
     <Style TargetType="ListBoxItem">
-        <Setter Property="Background" Value="#FF868686"/>
+        <Setter Property="Background" Value="#FFE2E2E2"/>
+    </Style>
+
+    <Style TargetType="ComboBoxItem">
         <Setter Property="Foreground" Value="#FF2B2B2B"/>
     </Style>
-
+    
     <Style TargetType="CheckBox">
-        <Setter Property="Foreground" Value="#FFA78F8F"/>
+        <Setter Property="Foreground" Value="#FF2B2B2B"/>
     </Style>
-
-   
     
     <Style TargetType="DataGrid">
         <Setter Property="Background" Value="White"/>

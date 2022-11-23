@@ -24,20 +24,21 @@ namespace School
     public partial class StudentWindow : Window
     {
 
+        IEnumerable<Student> students = DBConnect.db.Student;
         public StudentWindow()
         {
             InitializeComponent();
             //Вывод ФИО ученика
-            foreach (var entity in DBConnect.db.Student.Where(student => student.id == IdUSer.Id))
+            foreach (var entity in students.Where(student => student.id == IdUSer.Id))
                 NameStudent.Text = entity.Name + " " + entity.Surname + " " + entity.Lastname;
             //Вывод класса ученика
-            foreach (var entity in DBConnect.db.Student.Where(s => s.id == IdUSer.Id).Select(c => c.Class))
+            foreach (var entity in students.Where(s => s.id == IdUSer.Id).Select(c => c.Class))
                 ClassStudent.Text += entity.Name + "\nПреподают:";
             //Вывод преподователей ученика
             foreach (var entity in DBConnect.db.StudentLesson.Where(c => c.IdStudent == IdUSer.Id).SelectMany(c => c.Lesson.LessonEmployee.Select(e => e.Employee)).Distinct())
                 ListEmployee.Items.Add(entity.Name + " " + entity.Surname + " " + entity.Lastname);
             //Вывод предметов ученика
-            foreach (var entity in DBConnect.db.Student.Where(s => s.id == IdUSer.Id).SelectMany(c => c.StudentLesson.Select(l => l.Lesson)))
+            foreach (var entity in students.Where(s => s.id == IdUSer.Id).SelectMany(c => c.StudentLesson.Select(l => l.Lesson)))
                 ListLesson.Items.Add(entity.Name);
             ThemeChange.ShowTheme();
         }
@@ -52,11 +53,18 @@ namespace School
             foreach (var item in e.AddedItems)
                 lessons += item.ToString();
 
-            foreach (var entity in (DBConnect.db.Student.SelectMany(c => c.VisitLeson).Where(c => c.Lesson.Name == lessons && c.Student.id == IdUSer.Id)))
+            if(students.SelectMany(c => c.VisitLeson).Where(c => c.Lesson.Name == lessons && c.Student.id == IdUSer.Id).Count() < 1)
+            {
+                ListVisit.Items.Add("Нет записей по этому предмету");
+                return;
+            }
+                
+            foreach (var entity in students.SelectMany(c => c.VisitLeson).Where(c => c.Lesson.Name == lessons && c.Student.id == IdUSer.Id)) { 
                 if (entity.Presence)
                     ListVisit.Items.Add("Посетил занятия " + entity.DateVisitLessons.ToString().Substring(0,10) + " c " + entity.TimeStart + " до " + entity.TimeFinish);
                 else
                     ListVisit.Items.Add("Пропустил занятия " + entity.DateVisitLessons.ToString().Substring(0, 10) + " c " + entity.TimeStart + " до " + entity.TimeFinish);
+            }
         }
         //Отображение информации об учителе
         private void ListEmployee_SelectionChanged(object sender, SelectionChangedEventArgs e)
