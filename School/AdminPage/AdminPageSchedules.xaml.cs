@@ -102,9 +102,7 @@ namespace School.AdminPage
         }
         #endregion
 
-        private bool EntityValidator(Schedule schedule) =>  Schedules.Count(x => (x.DataTimeStart < schedule.DataTimeStart ||
-                                                            x.DataTimeStart > schedule.DataTimeStart + new TimeSpan(0, 45, 0)) &&
-                                                            x.NumberCabinet == schedule.NumberCabinet && 
+        private bool EntityValidator(Schedule schedule) =>  Schedules.Count(x => x.NumberCabinet == schedule.NumberCabinet && 
                                                             x.idLessonEmloyee == schedule.idLessonEmloyee) == 1 &&
                                                             schedule.NumberCabinet != null &&
                                                             schedule.DataTimeStart != null;
