@@ -130,6 +130,10 @@ namespace School
             StudentLesson.ItemsSource = null;
             infoMessageStudent.Text = "";
             Presence = false;
+            if(selectLessen.SelectedItem == null)
+            {
+                return;
+            }
 
             var queryStudent = (
                                 from student in students
@@ -206,6 +210,7 @@ namespace School
         private void addStudent_Click(object sender, RoutedEventArgs e)
         {
             StudentLesson.ItemsSource = null;
+            selectLessen.SelectedItem = null;
 
             if (!ListWindow.AddStudents.AddStudentLoad)
                 new ListWindow.AddStudents().Show();
@@ -215,6 +220,7 @@ namespace School
         private void deleteStudent_Click(object sender, RoutedEventArgs e)
         {
             StudentLesson.ItemsSource = null;
+            selectLessen.SelectedItem = null;
 
             if (!ListWindow.DeleteStudents.deleteStudentsLoad)
                 new ListWindow.DeleteStudents().Show();

@@ -21,7 +21,7 @@
         
         <Border Grid.ColumnSpan="3" BorderBrush="#000" BorderThickness="0.5">
             <StackPanel Background="#FFADADAD">
-                <TextBlock FontSize="34" HorizontalAlignment="Center" Text="Панель администратора"/>
+                <TextBlock Foreground="#FF2B2B2B" FontSize="34" HorizontalAlignment="Center" Text="Панель администратора"/>
             </StackPanel>
         </Border>
 

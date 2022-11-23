@@ -4,7 +4,7 @@
     <Style x:Key="StyleGrid">
         <Setter Property="Grid.Background" Value="#FF404040"/>
         <Setter Property="TextBlock.Foreground" Value="#FFDFDFDF"/>
-        <Setter Property="TextBlock.FontFamily" Value="Bahnschrift SemiBold"/>
+        <Setter Property="TextBlock.FontFamily" Value="Candara"/>
     </Style>
 
     <Style TargetType="TextBox" x:Key="StyleTextBox">
@@ -19,6 +19,8 @@
 
     <Style TargetType="DataGridRowHeader">
         <Setter Property="Background" Value="#FF373737"/>
+        <Setter Property="BorderBrush" Value="#FFDFDFDF"/>
+        <Setter Property="BorderThickness" Value="1 0 1 1"/>
     </Style>
     
     <Style TargetType="Image" x:Name="imageStyle">
